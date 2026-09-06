@@ -1,0 +1,24 @@
+session_id,partition,venue,content_type,primary_mic,mics,duration_min,programme_min,files,a_format_files
+2019-04-12_holy-trinity-church_choir-organ-strings,train,holy-trinity-church,orchestra,Zylia ZM-1,ZM-1,79.5,79.5,1,0
+2021-03-27_aula-pg_solo-piano,train,aula-pg,solo_piano,Zylia ZM-1,ZM-1,16.3,16.3,4,0
+2021-06-27_aula-pg_choir,train,aula-pg,choir,Zylia ZM-1,NT-SF1+ZM-1,33.3,16.6,10,0
+2022-03-10_gut-lobby_choir-orchestra,train,gut-lobby,choir_with_orchestra,Zylia ZM-1,ZM-1,67.5,67.5,2,0
+2022-03-25_sopot-pier_outdoor-ambient,test,sopot-pier,ambient,Zylia ZM-1,ZM-1,11.4,11.4,1,0
+2022-04-13_aula-pg_solo-piano,train,aula-pg,solo_piano,Zylia ZM-1,ZM-1,51.6,51.7,7,0
+2022-04-21_aula-pg_choir-soloists,train,aula-pg,choir_with_soloists,Zylia ZM-1,ZM-1,45.6,45.6,6,0
+2022-06-27_aula-pg_solo-piano,train,aula-pg,solo_piano,Zylia ZM-1,ZM-1,38.8,38.8,5,0
+2023-02-21_gut-lobby_choir-jazz-band,train,gut-lobby,choir_with_ensemble,Zylia ZM-1,ZM-1,86.6,86.6,1,0
+2023-06-03_aula-pg_choir-contemporary,train,aula-pg,choir,Zylia ZM-1,NT-SF1+ZM-1,8.7,4.1,2,0
+2023-08-04_aula-pg_solo-piano,train,aula-pg,solo_piano,Zylia ZM-1,ZM-1,25.9,25.9,6,0
+2023-10-12_baltic-philharmonic_choir,validation,baltic-philharmonic,choir,Zylia ZM-1,ZM-1,74.4,74.4,2,0
+2023-12-07_aula-pg_chamber-ensemble,validation,aula-pg,ensemble,Zylia ZM-1,ZM-1,8.3,8.3,1,0
+2024-03-07_aula-pg_piano-duet,train,aula-pg,piano_duet,Zylia ZM-1,ZM-1,17.9,17.9,4,0
+2024-03-09_fiqu-miqu-studio_folk-band,test,fiqu-miqu-studio,ensemble,Zylia ZM-1,ZM-1,19.2,19.2,2,0
+2024-04-30_aula-pg_solo-piano,train,aula-pg,solo_piano,Zylia ZM-1,Spcmic+ZM-1,30.7,15.4,2,0
+2024-07-27_piechcin-quarry_vr-production-outdoor,train,piechcin-quarry,vr_film_production,Zylia ZM-1,ZM-1,3.2,3.2,1,0
+2024-08-15_aula-pg_solo-piano-mic-comparison,test,aula-pg,solo_piano,Zylia ZM-1,SR-VRMIC+Spcmic+ZM-1,142.1,35.8,8,6
+2024-12-10_aula-pg_solo-piano-chopin,validation,aula-pg,solo_piano,Zylia ZM-1,NT-SF1+ZM-1,49.6,24.8,2,0
+2025-01-10_amuz_solo-piano-chopin,train,amuz,solo_piano,Zylia ZM-1,ZM-1,15.2,15.2,1,0
+2025-02-05_aula-pg_violin-piano-duo,train,aula-pg,chamber,Zylia ZM-1,NT-SF1+ZM-1,31.4,15.7,2,0
+2025-09-28_jedrzejewo-cave_vr-production-indoor,validation,jedrzejewo-cave,vr_film_production,Harpex Spcmic,Spcmic,4.5,2.3,2,0
+2026-01-18_oliwa-cathedral_choir-christmas,train,oliwa-cathedral,choir,Harpex Spcmic,Spcmic,100.0,50.0,2,0

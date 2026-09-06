@@ -1,0 +1,689 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doi.org/10.34808/w8bx-2094/metadata_schema.json",
+  "title": "HOA corpus session metadata (metadata.yaml)",
+  "description": "Schema for sessions/<session>/metadata.yaml in 'A Seven-Year Corpus of Higher-Order Ambisonics Recordings' (deposit v1.2, DOI 10.34808/w8bx-2094). Derived by parsing all 23 session files. Required keys are those present in every session; every other key is optional and its absence means 'not recorded or not applicable' (no key is ever null). Enumerations list the values observed in the 23 files. Units are stated in each description.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "session_id",
+    "duration_minutes",
+    "venue",
+    "equipment",
+    "recording_settings",
+    "content",
+    "files",
+    "rendered_files_count"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "recording_date"
+      ]
+    },
+    {
+      "required": [
+        "recording_dates"
+      ]
+    }
+  ],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier. Equals the session directory name (unified in v1.2; earlier versions used a separate slug)."
+    },
+    "recording_date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 calendar date (YYYY-MM-DD) of the session. Present in 21/23 files; multi-day sessions may carry recording_dates instead of or in addition to this key."
+    },
+    "recording_dates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "date"
+      },
+      "description": "ISO 8601 dates for sessions spanning more than one day (3/23 files)."
+    },
+    "duration_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Programme duration in minutes. Parallel captures of the same performance by several microphones are counted once, so this is not the sum of files[].duration_minutes in multi-microphone sessions."
+    },
+    "venue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "city",
+        "country",
+        "coordinates"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Venue name, Polish original with English gloss in parentheses where applicable."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "concert_hall",
+            "church",
+            "outdoor",
+            "recording_studio",
+            "outdoor_quarry",
+            "indoor_film_set"
+          ],
+          "description": "Venue category. 'concert_hall' also covers the GUT lobby (Hol przed Aula)."
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "enum": [
+            "Poland"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Venue web page (20/23 files)."
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "description": "[latitude, longitude] in WGS84 decimal degrees, 4 decimals."
+        }
+      }
+    },
+    "acoustics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Room and audience conditions. Absent in the 2025-09-28 file. The measured parameters (rt60_*, clarity_*, definition_*, center_time_*, lateral_energy_*, direct_reverb_*, diffuseness_*) are venue properties from the 2023 Aula PG impulse-response survey (see acoustics_reference); only the aMuz hall carries a second set of clarity values.",
+      "properties": {
+        "audience_present": {
+          "type": "boolean",
+          "description": "Whether an audience was present during the recording (22/23 files)."
+        },
+        "audience_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Approximate audience headcount; present only when audience_present is true (6/23 files)."
+        },
+        "room_length_m": {
+          "type": "number",
+          "description": "Room length in metres."
+        },
+        "room_width_m": {
+          "type": "number",
+          "description": "Room width in metres."
+        },
+        "room_height_m": {
+          "type": "number",
+          "description": "Room height in metres."
+        },
+        "seating_capacity": {
+          "type": "integer",
+          "description": "Seats in the hall."
+        },
+        "rt60_T30_seconds": {
+          "type": "number",
+          "description": "Reverberation time T30 in seconds, ISO 3382-1 (mean of 500 Hz and 1 kHz bands)."
+        },
+        "rt60_T20_seconds": {
+          "type": "number",
+          "description": "Reverberation time T20 in seconds."
+        },
+        "rt60_EDT_seconds": {
+          "type": "number",
+          "description": "Early decay time in seconds."
+        },
+        "clarity_C80_dB": {
+          "type": "number",
+          "description": "Clarity C80 in dB."
+        },
+        "clarity_C50_dB": {
+          "type": "number",
+          "description": "Clarity C50 in dB."
+        },
+        "definition_D50_percent": {
+          "type": "number",
+          "description": "Definition D50 in percent."
+        },
+        "center_time_Ts_ms": {
+          "type": "number",
+          "description": "Centre time Ts in milliseconds."
+        },
+        "lateral_energy_fraction_LEF": {
+          "type": "number",
+          "description": "Early lateral energy fraction, dimensionless (0-1)."
+        },
+        "direct_reverb_ratio_DRR_dB": {
+          "type": "number",
+          "description": "Direct-to-reverberant ratio in dB."
+        },
+        "diffuseness_early": {
+          "type": "number",
+          "description": "Early-part diffuseness estimate, dimensionless (0-1)."
+        },
+        "diffuseness_late": {
+          "type": "number",
+          "description": "Late-part diffuseness estimate, dimensionless (0-1)."
+        },
+        "rt60_octave_bands": {
+          "type": "object",
+          "description": "Octave-band T30 in seconds, keyed by band centre frequency.",
+          "additionalProperties": false,
+          "properties": {
+            "125Hz": {
+              "type": "number"
+            },
+            "250Hz": {
+              "type": "number"
+            },
+            "500Hz": {
+              "type": "number"
+            },
+            "1kHz": {
+              "type": "number"
+            },
+            "2kHz": {
+              "type": "number"
+            },
+            "4kHz": {
+              "type": "number"
+            },
+            "8kHz": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "acoustics_reference": {
+      "type": "string",
+      "description": "Provenance of the measured acoustic parameters (13/23 files, all Aula PG sessions): 'Krol & Jankowski (2023), MSc thesis, Gdansk University of Technology'."
+    },
+    "equipment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_mic_model"
+      ],
+      "properties": {
+        "primary_mic_model": {
+          "type": "string",
+          "enum": [
+            "Zylia ZM-1",
+            "Harpex Spcmic"
+          ],
+          "description": "Spherical array whose render is the session's primary file (ZM-1 in 21 sessions, Spcmic in 2)."
+        },
+        "primary_mic_serial": {
+          "type": "string",
+          "description": "Manufacturer serial number of the primary array (22/23 files). The same ZM-1 unit (SM19DRXWS03100AR) is used in all 21 ZM-1 sessions."
+        },
+        "primary_mic_mount": {
+          "type": "string",
+          "description": "Stand or rig description (11/23 files)."
+        },
+        "primary_mic_height_m": {
+          "type": "number",
+          "description": "Array centre height above floor in metres (22/23 files)."
+        },
+        "primary_mic_distance_source_m": {
+          "type": "number",
+          "description": "Approximate array-to-source distance in metres (20/23 files)."
+        },
+        "primary_mic_orientation": {
+          "type": "string",
+          "description": "Free-text placement and facing description (21/23 files)."
+        },
+        "secondary_mics": {
+          "type": "array",
+          "description": "Other capture devices present at the session (15/23 files). Includes microphones whose recordings are not part of the corpus and 360-degree cameras; see purpose and notes.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model"
+            ],
+            "properties": {
+              "model": {
+                "type": "string"
+              },
+              "purpose": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "channels": {
+                "description": "Channel count, or the list of interface input numbers used.",
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                ]
+              },
+              "height_m": {
+                "type": "number",
+                "description": "Height above floor in metres."
+              },
+              "processing": {
+                "description": "A-to-B conversion tool and version used for this device's corpus render(s).",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "recording_settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_rate_hz",
+        "bit_depth"
+      ],
+      "properties": {
+        "sample_rate_hz": {
+          "type": "integer",
+          "enum": [
+            48000,
+            96000
+          ],
+          "description": "Capture sample rate of the primary array in Hz. Rendered files may differ (see files[].sample_rate_hz and DATASHEET.md)."
+        },
+        "bit_depth": {
+          "type": "integer",
+          "enum": [
+            24,
+            32
+          ],
+          "description": "Capture bit depth of the primary array. All rendered B-format files are 24-bit PCM."
+        },
+        "raw_channels": {
+          "type": "integer",
+          "enum": [
+            20,
+            84
+          ],
+          "description": "Channel count of the primary A-format capture (ZM-1: 19 capsules + 1 digitally silent channel; Spcmic: 84)."
+        },
+        "recording_software": {
+          "type": "string",
+          "description": "Capture application (22/23 files)."
+        },
+        "daw": {
+          "type": "string",
+          "description": "DAW used for editing and rendering (22/23 files)."
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "solo_piano",
+            "piano_duet",
+            "chamber",
+            "ensemble",
+            "orchestra",
+            "choir",
+            "choir_with_soloists",
+            "choir_with_ensemble",
+            "choir_with_orchestra",
+            "ambient",
+            "vr_film_production"
+          ],
+          "description": "Content category used for corpus inventories and for splits.csv."
+        },
+        "genre": {
+          "type": "string",
+          "description": "Free-text genre label (22/23 files). 12 distinct values after the v1.2 normalisation; the duplicate spellings choral_classical and contemporary_classical no longer occur."
+        },
+        "performers_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of performers on stage (22/23 files); for VR productions includes extras."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Why the session was recorded (17/23 files)."
+        },
+        "conductor": {
+          "type": "string",
+          "description": "Conductor name (3/23 files); other sessions list the conductor under performers[]."
+        },
+        "ensemble": {
+          "type": "string",
+          "description": "Ensemble name (3/23 files); other sessions list ensembles under performers[]."
+        }
+      }
+    },
+    "instruments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Instruments and voices present, free text with counts or serials in parentheses (19/23 files)."
+    },
+    "performers": {
+      "type": "array",
+      "description": "Named performers, ensembles, or anonymised actor roles (18/23 files).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "affiliation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "repertoire": {
+      "type": "array",
+      "description": "Pieces performed (21/23 files). Entries are not one-to-one with files: concert sessions list every piece but ship a single continuous file.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "composer": {
+            "type": "string",
+            "description": "Composer, possibly with arranger ('arr. ...')."
+          },
+          "duration_minutes": {
+            "type": "number",
+            "description": "Piece duration in minutes."
+          },
+          "performer": {
+            "type": "string",
+            "description": "Soloist for this piece when different from the session performers."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "processing": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A-to-B conversion summary (22/23 files). Version-level provenance for every render is fixed corpus-wide: ZYLIA Ambisonics Converter v1.7.0 (ZM-1), Spacemic VST 1.0.2 alpha (Spcmic 5OA), Spcmic app 0.9.1 beta (Spcmic 3OA), Audio Brewers ab Transcoder with anechoic IRs (NT-SF1, SR-VRMIC); see DATASHEET.md.",
+      "properties": {
+        "ambisonics": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        },
+        "ambisonics_order": {
+          "type": "integer",
+          "enum": [
+            1,
+            3,
+            5
+          ],
+          "description": "Order of the session's renders when all renders share one order (19/23 files)."
+        },
+        "ambisonics_orders": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "enum": [
+              1,
+              3,
+              5
+            ]
+          },
+          "description": "Orders present when the session ships renders of different orders (3/23 files)."
+        },
+        "ambisonics_channels": {
+          "description": "(N+1)^2 channels for each order, scalar or list matching ambisonics_order(s).",
+          "anyOf": [
+            {
+              "type": "integer",
+              "enum": [
+                4,
+                16,
+                36
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "enum": [
+                  4,
+                  16,
+                  36
+                ]
+              }
+            }
+          ]
+        },
+        "processing_chain": {
+          "description": "Conversion tool per device: a single string, or an object keyed by device label (ZM-1, Spcmic, NT-SF1, competition).",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One entry per rendered B-format WAV in audio/. A-format files (audio_a_format/) are not listed here.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "pattern": "^(1OA|3OA|5OA)_(ZM1|ZM1b|Spcmic|NTSF1|SRVRMIC)_.+\\.wav$",
+            "description": "<ORDER>_<MIC>_<CONTENT>.wav; ORDER in {1OA,3OA,5OA}, MIC in {ZM1, ZM1b, Spcmic, NTSF1, SRVRMIC}."
+          },
+          "duration_minutes": {
+            "type": "number",
+            "description": "File duration in minutes, one decimal (72/74 files)."
+          },
+          "channels": {
+            "type": "integer",
+            "enum": [
+              4,
+              16,
+              36
+            ],
+            "description": "Channel count (20/74 files); otherwise implied by the ORDER prefix."
+          },
+          "ambisonics_order": {
+            "type": "integer",
+            "enum": [
+              1,
+              3,
+              5
+            ],
+            "description": "Order (8/74 files); otherwise implied by the ORDER prefix."
+          },
+          "microphone": {
+            "type": "string",
+            "description": "Full microphone name (6/74 files); otherwise implied by the MIC token."
+          },
+          "lufs_i": {
+            "type": "number",
+            "description": "Integrated loudness in LUFS (ITU-R BS.1770-5), measured on the normalised render (72/74 files)."
+          },
+          "true_peak_db": {
+            "type": "number",
+            "maximum": 0,
+            "description": "True-peak level in dBTP of the normalised render (64/74 files). The corresponding column in corpus_statistics.csv repeats the sample peak and is not an independent true-peak measurement."
+          },
+          "lra": {
+            "type": "number",
+            "description": "Loudness range in LU (64/74 files)."
+          },
+          "sample_rate_hz": {
+            "type": "integer",
+            "enum": [
+              48000,
+              96000
+            ],
+            "description": "Render sample rate in Hz (2/74 files). Absent means the session capture rate applies, except for the Spcmic renders discussed in DATASHEET.md."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rendered_files_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of entries in files[]."
+    },
+    "rendered_files_size_gb": {
+      "type": "number",
+      "description": "Total size of the session's rendered B-format WAV files (16/23 files), in decimal GB (10^9 bytes)."
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Session-level quality summary of the rendered files (21/23 files). clipping_detected refers to the renders only; the SR-VRMIC A-format masters of 2024-08-15 contain input clipping (see DATASHEET.md).",
+      "properties": {
+        "peak_normalization_dbtp": {
+          "type": "number",
+          "enum": [
+            -0.5
+          ],
+          "description": "Target true-peak of the loudest file in each (session x microphone) group, dBTP."
+        },
+        "lufs_i_range": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "description": "[a, b] LUFS bounds over files[].lufs_i; element order is not consistent across sessions."
+        },
+        "lufs_i_average": {
+          "type": "number",
+          "description": "Arithmetic mean of files[].lufs_i in LUFS."
+        },
+        "dynamic_preservation": {
+          "type": "boolean",
+          "description": "True when one gain was applied per microphone group so that within-group loudness relations are preserved."
+        },
+        "clipping_detected": {
+          "type": "boolean"
+        },
+        "quality_rating": {
+          "type": "string",
+          "enum": [
+            "excellent"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "is_published": {
+      "type": "boolean",
+      "description": "True when a produced version of the session was released publicly (9/23 files); absent means no public release is known."
+    },
+    "publication_platforms": {
+      "type": "array",
+      "description": "Public releases derived from the session (9/23 files).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "platform"
+        ],
+        "properties": {
+          "platform": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "date": {
+            "type": "string",
+            "description": "YYYY, YYYY-MM or YYYY-MM-DD."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "photos_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of images in photos/ (15/23 files). Every session directory contains a photos/ folder even when this key is absent."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text session notes (21/23 files)."
+    }
+  }
+}

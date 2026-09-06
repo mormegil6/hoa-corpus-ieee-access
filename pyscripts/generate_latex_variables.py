@@ -4,14 +4,15 @@ Generate LaTeX variable files from CSV data for the HOA Corpus paper.
 
 This script reads CSV files from plots/ and data/ directories and generates
 .tex files with \newcommand definitions that can be \input in the main paper.
-This ensures values in the text stay synchronized with the data.
+Values the pipeline computes therefore stay synchronized with the data.
 
 Usage:
     python pyscripts/generate_latex_variables.py
 """
 
+import argparse
 import csv
-import yaml
+import os
 from pathlib import Path
 from datetime import datetime
 import statistics
@@ -21,7 +22,9 @@ SCRIPT_DIR = Path(__file__).parent
 BASE_DIR = SCRIPT_DIR.parent
 PLOTS_DIR = BASE_DIR / "plots"
 DATA_DIR = BASE_DIR / "data"
-OUTPUT_DIR = BASE_DIR / "latex_variables"
+# all_variables.tex is written next to the other manuscript inputs in data/
+# (override with IEEE_DATA_DIR, as generate_session_inventory.py does)
+OUTPUT_DIR = Path(os.environ.get("IEEE_DATA_DIR", DATA_DIR))
 
 
 def digit_to_word(digit: str) -> str:
@@ -35,14 +38,14 @@ def digit_to_word(digit: str) -> str:
 
 def sanitize_latex_name(name: str) -> str:
     """Convert a string to a valid LaTeX command name.
-    
+
     LaTeX command names cannot contain digits, so we convert them to words.
     """
     # Remove special characters, replace spaces/dashes with nothing
     name = name.replace("-", "").replace("_", "").replace(" ", "")
     name = name.replace("(", "").replace(")", "").replace(".", "")
     name = name.replace("/", "").replace(":", "")
-    
+
     # Convert digits to words (LaTeX commands can't have digits)
     result = ""
     for char in name:
@@ -50,7 +53,7 @@ def sanitize_latex_name(name: str) -> str:
             result += digit_to_word(char)
         else:
             result += char
-    
+
     return result
 
 
@@ -67,17 +70,17 @@ def generate_mic_comparison_variables():
     if not csv_path.exists():
         print(f"  Warning: {csv_path} not found")
         return {}
-    
+
     variables = {}
     data = []
-    
+
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             label = row['label']
             lufs = float(row['lufs_i'])
             data.append({'label': label, 'lufs': lufs})
-            
+
             # Create variable name from label
             # e.g., "SR-VRMIC (1OA): CFranck-PreludeChoralFugue" -> "LUFSSRVRMICOneOACFranck"
             parts = label.split(': ')
@@ -89,34 +92,34 @@ def generate_mic_comparison_variables():
             piece = parts[1].split('-')[0] if len(parts) > 1 else ''
             var_name = f"LUFS{mic}{piece}"
             variables[var_name] = format_number(lufs, 2)
-    
+
     # Calculate summary statistics
     lufs_values = [d['lufs'] for d in data]
     variables['LUFSMicCompMin'] = format_number(min(lufs_values), 2)
     variables['LUFSMicCompMax'] = format_number(max(lufs_values), 2)
     variables['LUFSMicCompMean'] = format_number(statistics.mean(lufs_values), 2)
-    
+
     # Specific comparisons mentioned in paper
     # SR-VRMIC 1OA values
     srvrmic_values = [d['lufs'] for d in data if 'SR-VRMIC' in d['label']]
     if srvrmic_values:
         variables['LUFSSRVRMICOneOAMean'] = format_number(statistics.mean(srvrmic_values), 2)
-    
+
     # ZM-1 3OA values
     zm1_values = [d['lufs'] for d in data if 'ZM-1' in d['label']]
     if zm1_values:
         variables['LUFSZMOneMean'] = format_number(statistics.mean(zm1_values), 2)
-    
+
     # Spcmic 3OA values
     spcmic3_values = [d['lufs'] for d in data if 'Spcmic (3OA)' in d['label']]
     if spcmic3_values:
         variables['LUFSSpcmicThreeOAMean'] = format_number(statistics.mean(spcmic3_values), 2)
-    
+
     # Spcmic 5OA values
     spcmic5_values = [d['lufs'] for d in data if 'Spcmic (5OA)' in d['label']]
     if spcmic5_values:
         variables['LUFSSpcmicFiveOAMean'] = format_number(statistics.mean(spcmic5_values), 2)
-    
+
     return variables
 
 
@@ -127,10 +130,10 @@ def generate_corpus_lufs_variables():
     if not csv_path.exists():
         print(f"  Warning: {csv_path} not found")
         return {}
-    
+
     variables = {}
     lufs_values = []
-    
+
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -139,15 +142,16 @@ def generate_corpus_lufs_variables():
                 continue
             if row.get('lufs_i'):
                 lufs_values.append(float(row['lufs_i']))
-    
+
     if lufs_values:
         variables['LUFSCorpusMin'] = format_number(min(lufs_values), 1)
         variables['LUFSCorpusMax'] = format_number(max(lufs_values), 1)
         variables['LUFSCorpusMean'] = format_number(statistics.mean(lufs_values), 1)
         variables['LUFSCorpusMedian'] = format_number(statistics.median(lufs_values), 1)
-        variables['LUFSCorpusStdDev'] = format_number(statistics.stdev(lufs_values), 1)
+        # population SD: the rendered files are the whole corpus, not a sample of it
+        variables['LUFSCorpusStdDev'] = format_number(statistics.pstdev(lufs_values), 1)
         variables['RenderedFilesCount'] = str(len(lufs_values))
-    
+
     return variables
 
 
@@ -157,15 +161,15 @@ def generate_spatial_energy_variables():
     if not csv_path.exists():
         print(f"  Warning: {csv_path} not found")
         return {}
-    
+
     variables = {}
-    
+
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
             mic = row['microphone']
             mic_clean = sanitize_latex_name(mic)
-            
+
             # Store order-specific values
             for i in range(6):
                 col = f'order_{i}_dBFS'
@@ -173,7 +177,7 @@ def generate_spatial_energy_variables():
                     order_word = digit_to_word(str(i))
                     var_name = f"SpatialEnergy{mic_clean}Order{order_word}"
                     variables[var_name] = format_number(float(row[col]), 1)
-            
+
             # Calculate rolloff for ZM-1 and Spcmic
             if 'ZM-1' in mic:
                 order0 = float(row['order_0_dBFS'])
@@ -189,7 +193,7 @@ def generate_spatial_energy_variables():
                 order5 = float(row['order_5_dBFS'])
                 variables['SpcmicFiveOARolloffZeroToThree'] = format_number(abs(order3 - order0), 1)
                 variables['SpcmicFiveOARolloffZeroToFive'] = format_number(abs(order5 - order0), 1)
-    
+
     return variables
 
 
@@ -199,11 +203,11 @@ def generate_timeline_variables():
     if not csv_path.exists():
         print(f"  Warning: {csv_path} not found")
         return {}
-    
+
     variables = {}
     dates = []
     content_types = {}
-    
+
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -211,12 +215,12 @@ def generate_timeline_variables():
             dates.append(date_str)
             content = row.get('content_type', 'unknown')
             content_types[content] = content_types.get(content, 0) + 1
-    
+
     if dates:
         variables['SessionCount'] = str(len(dates))
         variables['FirstSessionDate'] = dates[0] if dates else ''
         variables['LastSessionDate'] = dates[-1] if dates else ''
-        
+
         # Calculate year span (rounded to nearest year based on actual time span)
         try:
             from datetime import datetime
@@ -229,17 +233,17 @@ def generate_timeline_variables():
             variables['YearSpan'] = str(max(years_span, min_years))
         except:
             pass
-    
+
     # Content type counts - use only camelCase versions (no duplicates)
     for content, count in content_types.items():
         var_name = f"Sessions{sanitize_latex_name(content.title().replace(' ', ''))}"
         variables[var_name] = str(count)
-    
+
     # Also add specific aliases that main.tex uses
     # Count outdoor-like sessions (outdoor, ambient, etc.)
     outdoor_count = content_types.get('ambient', 0) + content_types.get('outdoor', 0) + content_types.get('vr_film_production', 0)
     variables['SessionsOutdoor'] = str(outdoor_count) if outdoor_count > 0 else str(content_types.get('ambient', 2))
-    
+
     return variables
 
 
@@ -302,19 +306,19 @@ def generate_equipment_variables():
 
 def write_latex_file(variables: dict, filename: str, description: str):
     """Write variables to a LaTeX file."""
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     output_path = OUTPUT_DIR / filename
-    
+
     with open(output_path, 'w') as f:
         f.write(f"% {description}\n")
         f.write(f"% Auto-generated by generate_latex_variables.py on {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
         f.write("% Do not edit manually - regenerate from source data\n\n")
-        
+
         for name, value in sorted(variables.items()):
             # Escape special characters in values
             value_escaped = str(value).replace('_', r'\_').replace('%', r'\%')
             f.write(f"\\newcommand{{\\{name}}}{{{value_escaped}}}\n")
-    
+
     print(f"  Generated: {output_path} ({len(variables)} variables)")
     return output_path
 
@@ -323,56 +327,49 @@ def main():
     print("=" * 60)
     print("GENERATING LATEX VARIABLE FILES")
     print("=" * 60)
-    
+
     all_variables = {}
-    
+
     # Microphone comparison
     print("\n[1] Microphone comparison LUFS...")
     vars_mic = generate_mic_comparison_variables()
     all_variables.update(vars_mic)
-    write_latex_file(vars_mic, "mic_comparison_vars.tex", "Microphone comparison LUFS variables")
-    
+
     # Corpus-wide LUFS
     print("\n[2] Corpus LUFS statistics...")
     vars_corpus = generate_corpus_lufs_variables()
     all_variables.update(vars_corpus)
-    write_latex_file(vars_corpus, "corpus_lufs_vars.tex", "Corpus-wide LUFS variables")
-    
+
     # Spatial energy
     print("\n[3] Spatial energy distribution...")
     vars_spatial = generate_spatial_energy_variables()
     all_variables.update(vars_spatial)
-    write_latex_file(vars_spatial, "spatial_energy_vars.tex", "Spatial energy distribution variables")
-    
+
     # Timeline
     print("\n[4] Timeline statistics...")
     vars_timeline = generate_timeline_variables()
     all_variables.update(vars_timeline)
-    write_latex_file(vars_timeline, "timeline_vars.tex", "Timeline and session count variables")
-    
+
     # Aula acoustics
     print("\n[5] Aula PG acoustics...")
     vars_aula = generate_aula_acoustics_variables()
     all_variables.update(vars_aula)
-    write_latex_file(vars_aula, "aula_acoustics_vars.tex", "Aula PG acoustic parameters")
-    
+
     # Equipment
     print("\n[6] Equipment specifications...")
     vars_equip = generate_equipment_variables()
     all_variables.update(vars_equip)
-    write_latex_file(vars_equip, "equipment_vars.tex", "Equipment specifications")
-    
+
     # Combined file with all variables
     print("\n[7] Combined variables file...")
     write_latex_file(all_variables, "all_variables.tex", "All HOA Corpus paper variables")
-    
+
     print("\n" + "=" * 60)
     print(f"COMPLETE - Generated {len(all_variables)} total variables")
     print("=" * 60)
-    print(f"\nTo use in LaTeX, add to preamble:")
-    print(f"  \\input{{latex_variables/all_variables.tex}}")
-    print(f"\nThen use variables like: \\LUFSCorpusMean, \\SessionCount, etc.")
+    print("\nThe manuscript reads it with \\input{data/all_variables.tex}")
 
 
 if __name__ == "__main__":
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
     main()

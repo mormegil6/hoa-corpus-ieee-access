@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive Figure Generation for HOA Corpus Paper
+Figure generation for the HOA corpus paper
 
 Generates all figures with accompanying CSV files for data interpretation.
 
@@ -20,10 +20,11 @@ Author: Bartłomiej Mróz
 Date: 2026-01-26
 """
 
+import argparse
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from matplotlib.patches import Circle
 from matplotlib.lines import Line2D
 import os
 from pathlib import Path
@@ -32,14 +33,12 @@ import csv
 import yaml
 import soundfile as sf
 from scipy import signal
-from scipy.fft import rfft, rfftfreq
-from scipy.ndimage import uniform_filter1d
 import warnings
 warnings.filterwarnings('ignore')
 
 # Try to import contextily for map background
 try:
-    import contextily as cx
+    import contextily as cx  # noqa: F401  (availability probe)
     HAS_CONTEXTILY = True
 except ImportError:
     HAS_CONTEXTILY = False
@@ -53,11 +52,20 @@ OUTPUT_DIR = SCRIPT_DIR / "plots"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Corpus and comparison session paths
-# Audio location: set the HOA_CORPUS_DIR environment variable to the directory
-# holding the corpus session folders (download from doi.org/10.34808/w8bx-2094).
-# The path below is only the original authoring machine's default.
-CORPUS_ROOT = Path(os.environ.get("HOA_CORPUS_DIR", "/Volumes/PNY 1TB/HOA recordings by BM - all"))
-MIC_COMPARISON_SESSION = CORPUS_ROOT / "2024.08.15 -- ZM1 Spcmic Saramonic" / "render"
+# Audio location: HOA_CORPUS_DIR is the root of the deposit (the directory holding
+# sessions/; download from doi.org/10.34808/w8bx-2094).
+CORPUS_ROOT = Path(os.environ["HOA_CORPUS_DIR"]) if os.environ.get("HOA_CORPUS_DIR") else None
+COMPARISON_SESSION = "2024-08-15_aula-pg_solo-piano-mic-comparison"
+MIC_COMPARISON_SESSION = (CORPUS_ROOT / "sessions" / COMPARISON_SESSION / "audio"
+                          if CORPUS_ROOT else None)
+
+
+def comparison_dir():
+    """The comparison session's audio folder; exits when HOA_CORPUS_DIR is not set."""
+    if MIC_COMPARISON_SESSION is None or not MIC_COMPARISON_SESSION.is_dir():
+        sys.exit(f"HOA_CORPUS_DIR is not set or holds no sessions/{COMPARISON_SESSION}/audio: "
+                 "point it at the deposit root (download from doi.org/10.34808/w8bx-2094)")
+    return MIC_COMPARISON_SESSION
 
 # Microphone files - CORRECT ORDER: 1OA -> 3OA -> 3OA -> 5OA
 MIC_ORDER = [
@@ -98,7 +106,7 @@ def load_lufs_csv():
     csv_path = DATA_DIR / "render_stats_all.csv"
     if not csv_path.exists():
         return []
-    
+
     lufs_data = []
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
@@ -132,14 +140,14 @@ def save_csv(data, fieldnames, output_path):
 def plot_lufs_mic_comparison():
     """LUFS comparison for the 2024-08-15 microphone comparison session only."""
     print("\n[Figure 8] LUFS - Microphone Comparison Session")
-    
+
     lufs_data = load_lufs_csv()
-    mic_session_data = [d for d in lufs_data if "2024.08.15" in d['session']]
-    
+    mic_session_data = [d for d in lufs_data if d['session'].startswith("2024-08-15")]
+
     if not mic_session_data:
         print("  No data for mic comparison session")
         return
-    
+
     # Sort by microphone order (1OA, 3OA ZM1, 3OA Spcmic, 5OA)
     def sort_key(d):
         fname = d['filename']
@@ -148,9 +156,9 @@ def plot_lufs_mic_comparison():
         if fname.startswith('3OA_Spcmic'): return (2, fname)
         if fname.startswith('5OA_'): return (3, fname)
         return (9, fname)
-    
+
     sorted_data = sorted(mic_session_data, key=sort_key)
-    
+
     # Prepare plot data
     labels = []
     values = []
@@ -160,7 +168,7 @@ def plot_lufs_mic_comparison():
         # Skip binaural files if present
         if fname.startswith('bin_'):
             continue
-        
+
         # Create readable label
         if '1OA_SRVRMIC' in fname:
             label = fname.replace('1OA_SRVRMIC_', 'SR-VRMIC (1OA): ').replace('.wav', '')
@@ -177,16 +185,16 @@ def plot_lufs_mic_comparison():
         else:
             label = fname.replace('.wav', '')
             color = '#7f7f7f'
-        
+
         labels.append(label)
         values.append(d['lufs_i'])
         colors.append(color)
-    
+
     # Plot
     fig, ax = plt.subplots(figsize=(10, 6))
     y_pos = np.arange(len(labels))
     bars = ax.barh(y_pos, values, color=colors, alpha=0.8)
-    
+
     ax.set_yticks(y_pos)
     ax.set_yticklabels(labels, fontsize=9)
     ax.set_xlabel('LUFS-I (Integrated Loudness)', fontsize=11)
@@ -194,17 +202,17 @@ def plot_lufs_mic_comparison():
     ax.axvline(-23, color='green', linestyle='--', alpha=0.7, label='EBU R128 (-23 LUFS)')
     ax.legend(loc='upper left')
     ax.grid(True, axis='x', alpha=0.3)
-    
+
     # Add value labels
     for i, (val, bar) in enumerate(zip(values, bars)):
         ax.text(val + 0.3, i, f'{val:.1f}', va='center', fontsize=8)
-    
+
     plt.tight_layout()
     output_png = OUTPUT_DIR / "pub_fig08_lufs_mic_comparison.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV
     csv_data = [{'label': l, 'lufs_i': v} for l, v in zip(labels, values)]
     save_csv(csv_data, ['label', 'lufs_i'], OUTPUT_DIR / "pub_fig08_lufs_mic_comparison.csv")
@@ -216,59 +224,57 @@ def plot_lufs_mic_comparison():
 def plot_lufs_corpus():
     """LUFS distribution across entire corpus as histogram."""
     print("\n[Figure 6] LUFS - Entire Corpus (Histogram)")
-    
+
     lufs_data = load_lufs_csv()
     if not lufs_data:
         print("  No LUFS data available")
         return
 
-    # Exclude the 2023-06-17 session: not part of the deposited corpus
-    lufs_data = [d for d in lufs_data if '2023.06.17' not in d['session']]
 
     # Extract LUFS values
     values = [d['lufs_i'] for d in lufs_data]
-    
+
     # Plot histogram
     fig, ax = plt.subplots(figsize=(10, 6))
-    
+
     # Determine bin edges (2 LUFS wide bins)
     min_val = np.floor(min(values) / 2) * 2
     max_val = np.ceil(max(values) / 2) * 2
     bins = np.arange(min_val, max_val + 2, 2)
-    
+
     # Create histogram
-    n, bins_out, patches = ax.hist(values, bins=bins, color='#1f77b4', 
+    n, bins_out, patches = ax.hist(values, bins=bins, color='#1f77b4',
                                     edgecolor='white', alpha=0.8)
-    
+
     ax.set_xlabel('LUFS-I (Integrated Loudness)', fontsize=12)
     ax.set_ylabel('Number of Files', fontsize=12)
     ax.grid(True, axis='y', alpha=0.3)
-    
+
     # Add statistics annotation
     mean_val = np.mean(values)
     median_val = np.median(values)
     std_val = np.std(values)
-    ax.axvline(mean_val, color='#d62728', linestyle='--', linewidth=2, 
+    ax.axvline(mean_val, color='#d62728', linestyle='--', linewidth=2,
                label=f'Mean: {mean_val:.1f} LUFS')
     ax.axvline(median_val, color='#2ca02c', linestyle=':', linewidth=2,
                label=f'Median: {median_val:.1f} LUFS')
     ax.legend(loc='upper left', fontsize=10)
-    
+
     plt.tight_layout()
     output_png = OUTPUT_DIR / "pub_fig06_lufs_corpus.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV with histogram data
-    csv_data = [{'bin_center': (bins_out[i] + bins_out[i+1])/2, 
+    csv_data = [{'bin_center': (bins_out[i] + bins_out[i+1])/2,
                  'count': int(n[i]),
                  'bin_start': bins_out[i],
-                 'bin_end': bins_out[i+1]} 
+                 'bin_end': bins_out[i+1]}
                 for i in range(len(n))]
-    save_csv(csv_data, ['bin_center', 'count', 'bin_start', 'bin_end'], 
+    save_csv(csv_data, ['bin_center', 'count', 'bin_start', 'bin_end'],
              OUTPUT_DIR / "pub_fig06_lufs_corpus.csv")
-    
+
     # Print summary
     print(f"    Range: {min(values):.1f} to {max(values):.1f} LUFS")
     print(f"    Mean: {mean_val:.1f} LUFS, Median: {median_val:.1f} LUFS")
@@ -305,7 +311,7 @@ def plot_geographic_map(locations=None, output_dir=None):
         return _render_geographic_map(locations, output_dir, write_csv=False)
 
     metadata = load_all_metadata()
-    
+
     # Extract all session data with GPS
     locations = []
     for session_name, data in metadata.items():
@@ -316,7 +322,7 @@ def plot_geographic_map(locations=None, output_dir=None):
         content_type = data.get('content_type', 'unknown')
         venue_type = data.get('venue_type', '')
         is_outdoor = 'outdoor' in str(venue_type).lower()
-        
+
         if lat and lon and lat != 0 and lon != 0:
             locations.append({
                 'session': session_name,
@@ -327,7 +333,7 @@ def plot_geographic_map(locations=None, output_dir=None):
                 'content_type': content_type,
                 'is_outdoor': is_outdoor,
             })
-    
+
     if not locations:
         print("  No GPS data available")
         return
@@ -367,27 +373,18 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
         'Kamieniołom Piechcin (Piechcin Quarry)': 'Piechcin Quarry',
         'Agrotourism barn - styrofoam cave film set': 'Jędrzejewo (artificial cave)',
     }
-    
+
     def _plot_map(locations_subset, show_venue_labels=False, suffix=''):
         """Helper to plot map with timeline-consistent markers."""
         import contextily as cx
         from shapely.geometry import Point
         import geopandas as gpd
         from matplotlib.lines import Line2D
-        
-        lats = [loc['latitude'] for loc in locations_subset]
-        lons = [loc['longitude'] for loc in locations_subset]
-        
-        # Calculate bounds with padding
-        lat_min, lat_max = min(lats), max(lats)
-        lon_min, lon_max = min(lons), max(lons)
-        
-        lat_center = (lat_min + lat_max) / 2
-        lon_center = (lon_min + lon_max) / 2
-        
+
+
         # Create figure
         fig, ax = plt.subplots(figsize=(10, 10))
-        
+
         # Create GeoDataFrame with all locations
         points = [Point(loc['longitude'], loc['latitude']) for loc in locations_subset]
         gdf = gpd.GeoDataFrame({
@@ -397,10 +394,10 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
             'content_type': [loc['content_type'] for loc in locations_subset],
             'is_outdoor': [loc['is_outdoor'] for loc in locations_subset],
         }, crs="EPSG:4326")
-        
+
         # Convert to Web Mercator for contextily
         gdf_merc = gdf.to_crs(epsg=3857)
-        
+
         # Get bounds and make square
         minx, miny, maxx, maxy = gdf_merc.total_bounds
         cx_m = (minx + maxx) / 2
@@ -410,49 +407,49 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
         max_range_m = max(range_x, range_y)
         padding_m = max(5000, max_range_m * 0.5)
         half_m = (max_range_m + padding_m) / 2
-        
+
         ax.set_xlim(cx_m - half_m, cx_m + half_m)
         ax.set_ylim(cy_m - half_m, cy_m + half_m)
-        
+
         # Add basemap tiles
         try:
             cx.add_basemap(ax, source=cx.providers.CartoDB.Positron, zoom='auto')
         except Exception as e:
             print(f"    Warning: Could not load map tiles: {e}")
             ax.set_facecolor('#e8f4f8')
-        
+
         # Plot each location with timeline-consistent markers
         for idx, row in gdf_merc.iterrows():
             x, y = row.geometry.x, row.geometry.y
             ctype = row['content_type']
             color, marker = type_styles.get(ctype, ('#7f7f7f', 'x'))
-            
+
             # Main marker
-            ax.scatter(x, y, s=150, c=color, marker=marker, 
+            ax.scatter(x, y, s=150, c=color, marker=marker,
                        alpha=0.9, edgecolors='none', zorder=5)
-            
+
             # Orange ring for outdoor
             if row['is_outdoor']:
-                ax.scatter(x, y, s=400, facecolors='none', 
+                ax.scatter(x, y, s=400, facecolors='none',
                            edgecolors='#ff7f0e', linewidth=2.5, zorder=4)
-        
+
         # Add labels - UNIQUE venues only, with leader lines
         if show_venue_labels:
             import random
-            
+
             # Group by venue to avoid duplicate labels
             venue_coords = {}  # venue_short -> (x, y) - use first occurrence
             for idx, row in gdf_merc.iterrows():
                 x, y = row.geometry.x, row.geometry.y
                 venue = row['venue']
                 venue_short = venue_abbrev.get(venue, venue)
-                
+
                 if venue_short not in venue_coords:
                     venue_coords[venue_short] = (x, y)
-            
+
             # Calculate offset distance based on map extent
             label_offset = half_m * 0.15  # 15% of map half-size
-            
+
             # Manual direction overrides for specific venues (angle in radians)
             # Angles: 0=right, π/2~1.57=up, π~3.14=left, -π/2~-1.57=down
             # Different directions for each map version
@@ -484,7 +481,7 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
                     "Piechcin Quarry": np.pi / 4,            # up-right
                     "Jędrzejewo (artificial cave)": -np.pi / 4,  # down-right
                 }
-            
+
             for i, (venue_short, (x, y)) in enumerate(venue_coords.items()):
                 # Check if there's a manual direction for this venue
                 if venue_short in manual_directions:
@@ -493,29 +490,29 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
                     # Use deterministic random based on venue name for reproducibility
                     rng = random.Random(hash(venue_short) % (2**31))
                     angle = rng.uniform(0, 2 * np.pi)
-                
+
                 dx = np.cos(angle)
                 dy = np.sin(angle)
-                
+
                 # Apply offset
                 offset_x = dx * label_offset
                 offset_y = dy * label_offset
-                
+
                 label_x = x + offset_x
                 label_y = y + offset_y
-                
+
                 # Determine text alignment based on offset direction
                 ha = 'left' if offset_x > 0 else 'right' if offset_x < 0 else 'center'
                 va = 'bottom' if offset_y > 0 else 'top' if offset_y < 0 else 'center'
-                
+
                 # Use annotate with arrow connecting label to point
                 ax.annotate(venue_short, xy=(x, y), xytext=(label_x, label_y),
                             fontsize=8, ha=ha, va=va, fontweight='bold',
-                            bbox=dict(boxstyle='round,pad=0.2', facecolor='white', 
+                            bbox=dict(boxstyle='round,pad=0.2', facecolor='white',
                                       alpha=0.9, edgecolor='gray', linewidth=0.5),
                             arrowprops=dict(arrowstyle='-', color='black', alpha=0.6, lw=0.8),
                             zorder=6)
-        
+
         # Add legend for marker types
         legend_categories = [
             ('Piano', '#1f77b4', 'o'),
@@ -525,7 +522,7 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
             ('Ambient', '#e377c2', '*'),
             ('VR Production', '#17becf', 'v'),
         ]
-        legend_handles = [Line2D([0], [0], marker=m, color='w', markerfacecolor=c, 
+        legend_handles = [Line2D([0], [0], marker=m, color='w', markerfacecolor=c,
                                  markersize=8, markeredgecolor='none', label=label)
                           for label, c, m in legend_categories]
         # Add outdoor indicator
@@ -533,19 +530,19 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
                                      markersize=10, markeredgecolor='#ff7f0e', markeredgewidth=2,
                                      label='Outdoor'))
         ax.legend(handles=legend_handles, loc='best', fontsize=8, framealpha=0.95)
-        
+
         # Force equal aspect
         ax.set_aspect('equal')
-        
+
         # Clean axes
         ax.set_xlabel('')
         ax.set_ylabel('')
         ax.set_xticks([])
         ax.set_yticks([])
-        
+
         plt.tight_layout()
         return fig
-    
+
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -583,9 +580,9 @@ def _render_geographic_map(locations, output_dir, write_csv=True):
 def plot_timeline():
     """Recording timeline visualization with different markers per content type and outdoor indicator."""
     print("\n[Figure 5] Timeline")
-    
+
     metadata = load_all_metadata()
-    
+
     # Extract dates, content types, and venue types
     events = []
     for session_name, data in metadata.items():
@@ -597,17 +594,17 @@ def plot_timeline():
                 date_str = recording_dates[0]  # Use first date for timeline
         if not date_str:
             continue
-        
+
         try:
             date = datetime.strptime(date_str, '%Y-%m-%d')
         except ValueError:
             continue
-        
+
         content_type = data.get('content_type', 'unknown')
         venue = data.get('venue_name', 'Unknown')
         venue_type = data.get('venue_type', '')
         is_outdoor = 'outdoor' in str(venue_type).lower()
-        
+
         events.append({
             'session': session_name,
             'date': date,
@@ -617,13 +614,13 @@ def plot_timeline():
             'venue_type': venue_type,
             'is_outdoor': is_outdoor,
         })
-    
+
     if not events:
         print("  No date data available")
         return
-    
+
     events = sorted(events, key=lambda x: x['date'])
-    
+
     # Content type styling: (color, marker shape)
     # Map various content types to standard categories with DISTINCT colors
     type_styles = {
@@ -647,36 +644,36 @@ def plot_timeline():
         'vr_film_production': ('#17becf', 'v'),  # Cyan triangle down
         'unknown': ('#7f7f7f', 'x'),          # Gray X
     }
-    
+
     # Plot
     fig, ax = plt.subplots(figsize=(14, 5))
-    
+
     # Plot each event individually to handle outdoor ring
     for i, event in enumerate(events):
         ctype = event['content_type']
         color, marker = type_styles.get(ctype, ('#7f7f7f', 'x'))
         y_pos = (i % 3) * 0.25
-        
+
         # Plot main marker
-        ax.scatter(event['date'], y_pos, s=120, c=color, marker=marker, 
+        ax.scatter(event['date'], y_pos, s=120, c=color, marker=marker,
                    alpha=0.85, edgecolors='none', zorder=3)
-        
+
         # Add orange ring for outdoor recordings
         if event['is_outdoor']:
-            ax.scatter(event['date'], y_pos, s=300, facecolors='none', 
+            ax.scatter(event['date'], y_pos, s=300, facecolors='none',
                        edgecolors='#ff7f0e', linewidth=2.5, zorder=2)
-    
+
     # Format x-axis
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     ax.xaxis.set_minor_locator(mdates.MonthLocator(bymonth=[1, 4, 7, 10]))
-    
+
     ax.set_ylim(-0.15, 0.65)  # Reduced whitespace (~20% less) ## HERE
     ax.set_yticks([])
     ax.set_xlabel('Recording Date', fontsize=11)
     # No title for publication (caption in paper)
     ax.grid(True, axis='x', alpha=0.3, linestyle='--')
-    
+
     # Legend with markers - show main categories only with distinct colors
     legend_categories = [
         ('Solo Piano', '#1f77b4', 'o'),
@@ -686,7 +683,7 @@ def plot_timeline():
         ('Ambient', '#e377c2', '*'),
         ('VR Production', '#17becf', 'v'),
     ]
-    legend_handles = [Line2D([0], [0], marker=m, color='w', markerfacecolor=c, 
+    legend_handles = [Line2D([0], [0], marker=m, color='w', markerfacecolor=c,
                              markersize=10, markeredgecolor='none', label=label)
                       for label, c, m in legend_categories]
     # Add outdoor indicator to legend
@@ -694,19 +691,19 @@ def plot_timeline():
                                   markersize=12, markeredgecolor='#ff7f0e', markeredgewidth=2.5,
                                   label='Outdoor (ring)'))
     ax.legend(handles=legend_handles, loc='upper left', fontsize=9, ncol=2, framealpha=0.9)
-    
+
     plt.tight_layout()
     output_png = OUTPUT_DIR / "pub_fig05_timeline.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV
-    csv_data = [{'session': e['session'], 'date': e['date_str'], 
+    csv_data = [{'session': e['session'], 'date': e['date_str'],
                  'content_type': e['content_type'], 'venue': e['venue'],
                  'venue_type': e['venue_type'], 'is_outdoor': e['is_outdoor']}
                 for e in events]
-    save_csv(csv_data, ['session', 'date', 'content_type', 'venue', 'venue_type', 'is_outdoor'], 
+    save_csv(csv_data, ['session', 'date', 'content_type', 'venue', 'venue_type', 'is_outdoor'],
              OUTPUT_DIR / "pub_fig05_timeline.csv")
 
 
@@ -716,12 +713,12 @@ def plot_timeline():
 def compute_spatial_energy_absolute(audio_path, max_order):
     """Compute absolute RMS energy per ambisonics order (not relative to W)."""
     data, sr = sf.read(audio_path)
-    
+
     if data.ndim == 1:
         return {}
-    
+
     n_channels = data.shape[1]
-    
+
     # Channel ranges for each order (ACN ordering)
     order_ranges = {
         0: (0, 1),     # W only
@@ -731,10 +728,10 @@ def compute_spatial_energy_absolute(audio_path, max_order):
         4: (16, 25),   # 9 channels
         5: (25, 36),   # 11 channels
     }
-    
+
     # Compute RMS energy per order (in dB, absolute)
     energies = {}
-    
+
     for ord_num in range(max_order + 1):
         start, end = order_ranges[ord_num]
         if end <= n_channels:
@@ -743,22 +740,22 @@ def compute_spatial_energy_absolute(audio_path, max_order):
             rms_per_channel = np.sqrt(np.mean(order_data ** 2, axis=0))
             avg_rms = np.mean(rms_per_channel)
             energies[ord_num] = 20 * np.log10(avg_rms + 1e-10)  # dBFS
-    
+
     return energies
 
 
 def plot_spatial_energy():
     """Spatial energy distribution: RMS level per Ambisonics order."""
     print("\n[Figure: Spatial Energy Distribution]")
-    
+
     mic_data = []
-    
+
     for mic_name, filename, color, max_order in MIC_ORDER:
-        audio_path = MIC_COMPARISON_SESSION / filename
+        audio_path = comparison_dir() / filename
         if not audio_path.exists():
             print(f"    Warning: {filename} not found")
             continue
-        
+
         print(f"    Analyzing: {mic_name}...")
         energies = compute_spatial_energy_absolute(audio_path, max_order)
         mic_data.append({
@@ -767,24 +764,24 @@ def plot_spatial_energy():
             'max_order': max_order,
             'energies': energies,
         })
-    
+
     if not mic_data:
         print("  No audio files found")
         return
-    
+
     # Plot: Line plot showing energy per order for each microphone
     fig, ax = plt.subplots(figsize=(10, 6))
-    
+
     markers = ['o', 's', '^', 'D']  # Different markers for each mic
     # All lines dashed with same style (differ by marker and color)
-    
+
     for i, m in enumerate(mic_data):
         orders = sorted(m['energies'].keys())
         values = [m['energies'][o] for o in orders]
-        
+
         ax.plot(orders, values, marker=markers[i], markersize=10, linewidth=2.5,
                 linestyle='--', color=m['color'], label=m['name'], alpha=0.9)
-    
+
     ax.set_xlabel('Ambisonics Order', fontsize=11)
     ax.set_ylabel('RMS Level (dB re. full scale)', fontsize=11)
     # No title for publication (caption in paper)
@@ -793,13 +790,13 @@ def plot_spatial_energy():
     ax.legend(loc='upper right', fontsize=9, framealpha=0.9)
     ax.grid(True, alpha=0.3, linestyle=':')
     ax.set_xlim(-0.3, 5.3)
-    
+
     plt.tight_layout()
     output_png = OUTPUT_DIR / "pub_fig09_spatial_energy.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV
     csv_data = []
     for m in mic_data:
@@ -807,7 +804,7 @@ def plot_spatial_energy():
         for ord_num in range(6):
             row[f'order_{ord_num}_dBFS'] = m['energies'].get(ord_num, '')
         csv_data.append(row)
-    
+
     fieldnames = ['microphone', 'max_order'] + [f'order_{i}_dBFS' for i in range(6)]
     save_csv(csv_data, fieldnames, OUTPUT_DIR / "pub_fig09_spatial_energy.csv")
 
@@ -818,34 +815,34 @@ def plot_spatial_energy():
 def compute_directional_intensity(audio_path):
     """Compute average intensity vector direction from 1st order channels."""
     data, sr = sf.read(audio_path)
-    
+
     if data.ndim == 1 or data.shape[1] < 4:
         return None
-    
+
     # Extract first-order channels: W(0), Y(1), Z(2), X(3) - ACN ordering
     w = data[:, 0]  # Omnidirectional (pressure)
     y = data[:, 1]  # Left-Right
-    z = data[:, 2]  # Up-Down  
+    z = data[:, 2]  # Up-Down
     x = data[:, 3]  # Front-Back
-    
+
     # Compute instantaneous intensity vectors (W * X, W * Y, W * Z)
     # Then average to get dominant direction
     ix = np.mean(w * x)  # Front-back intensity
     iy = np.mean(w * y)  # Left-right intensity
     iz = np.mean(w * z)  # Up-down intensity
-    
+
     # Compute magnitude
     i_mag = np.sqrt(ix**2 + iy**2 + iz**2)
-    
+
     # Compute RMS values for energy distribution
     w_rms = np.sqrt(np.mean(w ** 2))
     x_rms = np.sqrt(np.mean(x ** 2))
     y_rms = np.sqrt(np.mean(y ** 2))
     z_rms = np.sqrt(np.mean(z ** 2))
-    
+
     # Direction in horizontal plane (azimuth)
     azimuth = np.arctan2(iy, ix)  # Radians, 0 = front
-    
+
     return {
         'W_rms': w_rms, 'X_rms': x_rms, 'Y_rms': y_rms, 'Z_rms': z_rms,
         'Ix': ix, 'Iy': iy, 'Iz': iz, 'I_mag': i_mag,
@@ -856,14 +853,14 @@ def compute_directional_intensity(audio_path):
 def plot_directional_distribution():
     """Spatial intensity analysis - bar chart of channel energies and azimuth indicator."""
     print("\n[Figure: Directional Distribution]")
-    
+
     mic_data = []
-    
+
     for mic_name, filename, color, max_order in MIC_ORDER:
-        audio_path = MIC_COMPARISON_SESSION / filename
+        audio_path = comparison_dir() / filename
         if not audio_path.exists():
             continue
-        
+
         print(f"    Analyzing: {mic_name}...")
         result = compute_directional_intensity(audio_path)
         if result:
@@ -872,20 +869,20 @@ def plot_directional_distribution():
                 'color': color,
                 'data': result,
             })
-    
+
     if not mic_data:
         print("  No audio files found")
         return
-    
+
     # Create figure: Bar chart of channel RMS + azimuth info
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
+
     # Left: Bar chart of normalized channel energies
     x = np.arange(len(mic_data))
     width = 0.2
     channels = ['W', 'X', 'Y', 'Z']
     channel_colors = ['#1f77b4', '#d62728', '#2ca02c', '#ff7f0e']
-    
+
     for i, ch in enumerate(channels):
         values = []
         for m in mic_data:
@@ -896,26 +893,26 @@ def plot_directional_distribution():
                 values.append(20 * np.log10(ch_rms + 1e-10))  # dBFS
             else:
                 values.append(ch_rms / w_rms if w_rms > 0 else 0)  # Ratio
-        
+
         if ch == 'W':
-            ax1.bar(x + (i - 1.5) * width, values, width, label=f'{ch} (dBFS)', 
+            ax1.bar(x + (i - 1.5) * width, values, width, label=f'{ch} (dBFS)',
                     color=channel_colors[i], alpha=0.8, edgecolor='black')
         else:
             pass  # We'll do the directional channels on ax2
-    
+
     ax1.set_xlabel('Microphone', fontsize=11)
     ax1.set_ylabel('W Channel Level (dBFS)', fontsize=11)
     # No title for publication (caption in paper)
     ax1.set_xticks(x)
     ax1.set_xticklabels([m['name'] for m in mic_data], fontsize=9)
     ax1.grid(True, axis='y', alpha=0.3, linestyle=':')
-    
+
     # Right: Directional channels normalized to W
     for i, ch in enumerate(['X', 'Y', 'Z']):
         values = [m['data'][f'{ch}_rms'] / m['data']['W_rms'] for m in mic_data]
-        ax2.bar(x + (i - 1) * width, values, width, label=f'{ch} ({["Front-Back", "Left-Right", "Up-Down"][i]})', 
+        ax2.bar(x + (i - 1) * width, values, width, label=f'{ch} ({["Front-Back", "Left-Right", "Up-Down"][i]})',
                 color=channel_colors[i+1], alpha=0.8, edgecolor='black')
-    
+
     ax2.set_xlabel('Microphone', fontsize=11)
     ax2.set_ylabel('Normalized to W Channel', fontsize=11)
     # No title for publication (caption in paper)
@@ -924,15 +921,15 @@ def plot_directional_distribution():
     # Legend positioned at center of second quarter (above second bar group), same y as upper right
     ax2.legend(loc='upper left', bbox_to_anchor=(0.25, 1.0), fontsize=9, framealpha=0.9)
     ax2.grid(True, axis='y', alpha=0.3, linestyle=':')
-    
+
     # No suptitle for publication
     plt.tight_layout()
-    
+
     output_png = OUTPUT_DIR / "pub_fig10_directional_distribution.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV
     csv_data = []
     for m in mic_data:
@@ -940,7 +937,7 @@ def plot_directional_distribution():
         for key, val in m['data'].items():
             row[key] = val
         csv_data.append(row)
-    
+
     fieldnames = ['microphone'] + list(mic_data[0]['data'].keys())
     save_csv(csv_data, fieldnames, OUTPUT_DIR / "pub_fig10_directional_distribution.csv")
 
@@ -951,7 +948,7 @@ def plot_directional_distribution():
 def compute_spectral_welch(audio_path, excerpt_seconds=None):
     """Compute smoothed frequency response using Welch's method."""
     data, sr = sf.read(audio_path)
-    
+
     # For stereo binaural, average L+R; for HOA, use W channel
     if data.ndim > 1:
         if data.shape[1] == 2:
@@ -960,21 +957,21 @@ def compute_spectral_welch(audio_path, excerpt_seconds=None):
             channel = data[:, 0]  # W channel for HOA
     else:
         channel = data
-    
+
     # Take excerpt from middle if specified
     if excerpt_seconds:
         samples = int(excerpt_seconds * sr)
         start = max(0, (len(channel) - samples) // 2)
         end = min(len(channel), start + samples)
         channel = channel[start:end]
-    
+
     # Use Welch's method for smoother spectrum
     nperseg = min(8192, len(channel) // 8)
     freqs, psd = signal.welch(channel, sr, nperseg=nperseg, noverlap=nperseg//2)
-    
+
     # Convert to dB (power spectral density)
     psd_db = 10 * np.log10(psd + 1e-12)
-    
+
     # Additional 1/3 octave smoothing for publication quality
     smoothed_db = np.copy(psd_db)
     for i in range(len(freqs)):
@@ -985,7 +982,7 @@ def compute_spectral_welch(audio_path, excerpt_seconds=None):
             mask = (freqs >= f_low) & (freqs <= f_high)
             if np.sum(mask) > 0:
                 smoothed_db[i] = np.mean(psd_db[mask])
-    
+
     return freqs, smoothed_db
 
 
@@ -997,7 +994,7 @@ def _plot_binaural_spectral(excerpt_seconds, suffix, title_suffix):
         "Spcmic (3OA)": "#ff7f0e",
         "Spcmic (5OA)": "#2ca02c",
     }
-    
+
     # Line widths - make them distinguishable
     linewidths = {
         "SR-VRMIC (1OA)": 2.0,
@@ -1005,25 +1002,25 @@ def _plot_binaural_spectral(excerpt_seconds, suffix, title_suffix):
         "Spcmic (3OA)": 1.6,
         "Spcmic (5OA)": 1.4,
     }
-    
+
     fig, ax = plt.subplots(figsize=(12, 6))
-    
+
     all_data = []
     csv_data = []
-    
+
     for mic_name, filename in BINAURAL_FILES:
-        audio_path = MIC_COMPARISON_SESSION / filename
+        audio_path = comparison_dir() / filename
         if not audio_path.exists():
             print(f"    Warning: {filename} not found")
             continue
-        
+
         print(f"    Processing: {mic_name}...")
         freqs, magnitude_db = compute_spectral_welch(audio_path, excerpt_seconds=excerpt_seconds)
         all_data.append((mic_name, freqs, magnitude_db))
-    
+
     if not all_data:
         return None
-    
+
     # Find common y-axis range from all data
     all_mags = []
     for _, freqs, mags in all_data:
@@ -1034,29 +1031,29 @@ def _plot_binaural_spectral(excerpt_seconds, suffix, title_suffix):
     y_min = np.min(valid_mags)
     y_max = np.max(valid_mags)
     y_range = y_max - y_min
-    
+
     # Plot each microphone - reverse order so Spcmic 3OA (orange) is on top
     for mic_name, freqs, magnitude_db in reversed(all_data):
         mask = (freqs >= 20) & (freqs <= 20000)
         freqs_plot = freqs[mask]
         mag_plot = magnitude_db[mask]
-        
-        ax.semilogx(freqs_plot, mag_plot, 
-                    label=mic_name, 
-                    color=mic_colors.get(mic_name, '#7f7f7f'), 
+
+        ax.semilogx(freqs_plot, mag_plot,
+                    label=mic_name,
+                    color=mic_colors.get(mic_name, '#7f7f7f'),
                     linestyle='-',
-                    alpha=0.9, 
+                    alpha=0.9,
                     linewidth=linewidths.get(mic_name, 1.5))
-        
+
         # CSV: subsample to ~200 log-spaced points
         log_indices = np.unique(np.geomspace(1, len(freqs_plot)-1, 200).astype(int))
         for idx in log_indices:
             csv_data.append({
-                'frequency_hz': round(freqs_plot[idx], 1), 
-                'microphone': mic_name, 
+                'frequency_hz': round(freqs_plot[idx], 1),
+                'microphone': mic_name,
                 'magnitude_db': round(mag_plot[idx], 2)
             })
-    
+
     ax.set_xlabel('Frequency (Hz)', fontsize=11)
     ax.set_ylabel('Power Spectral Density (dB)', fontsize=11)
     # No title for publication (caption in paper)
@@ -1065,28 +1062,28 @@ def _plot_binaural_spectral(excerpt_seconds, suffix, title_suffix):
     ax.legend(loc='upper right', fontsize=10, framealpha=0.9)
     ax.grid(True, which='major', alpha=0.4, linestyle='-')
     ax.grid(True, which='minor', alpha=0.2, linestyle=':')
-    
+
     plt.tight_layout()
     output_png = OUTPUT_DIR / f"fig_binaural_spectral{suffix}.png"
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"    PNG: {output_png}")
-    
+
     # Save CSV
-    save_csv(csv_data, ['frequency_hz', 'microphone', 'magnitude_db'], 
+    save_csv(csv_data, ['frequency_hz', 'microphone', 'magnitude_db'],
              OUTPUT_DIR / f"fig_binaural_spectral{suffix}.csv")
-    
+
     return True
 
 
 def plot_binaural_spectral_comparison():
     """Spectral comparison of binaural renders - both full and excerpt versions."""
     print("\n[Figure: Binaural Spectral Comparison]")
-    
+
     # Version 1: 30-second excerpt
     print("  Generating excerpt version...")
     _plot_binaural_spectral(excerpt_seconds=30, suffix="_excerpt", title_suffix="30s excerpt")
-    
+
     # Version 2: Full recording
     print("  Generating full version...")
     _plot_binaural_spectral(excerpt_seconds=None, suffix="_full", title_suffix="full")
@@ -1100,7 +1097,7 @@ def main():
     print("HOA CORPUS FIGURE GENERATION")
     print("=" * 70)
     print(f"Output directory: {OUTPUT_DIR}")
-    
+
     # Generate all figures
     plot_lufs_mic_comparison()
     plot_lufs_corpus()
@@ -1109,16 +1106,17 @@ def main():
     plot_spatial_energy()
     plot_directional_distribution()  # New supplementary figure
     plot_binaural_spectral_comparison()
-    
+
     print("\n" + "=" * 70)
     print("COMPLETE - All figures and CSV files generated")
     print("=" * 70)
-    
+
     # List outputs
     print("\nGenerated files:")
-    for f in sorted(OUTPUT_DIR.glob("fig*")):
+    for f in sorted(OUTPUT_DIR.glob("pub_fig*")):
         print(f"  {f.name}")
 
 
 if __name__ == "__main__":
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
     main()

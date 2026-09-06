@@ -1,0 +1,15 @@
+piece,config,n_samples,n_frames,runtime_s,order0_meanrms_dbfs,order1_meanrms_dbfs,order2_meanrms_dbfs,order3_meanrms_dbfs,rolloff_0_3_meanrms_db,order0_sum_dbfs,order1_sum_dbfs,order2_sum_dbfs,order3_sum_dbfs,rolloff_0_3_sum_db,cache_path
+Franck,factory,55095988,1148,5.1,-23.216,-31.783,-42.925,-50.612,27.396,-23.216,-26.519,-35.706,-42.023,18.807,cache/frames_ZMOne_factory_Franck.npz
+Franck,tikhonov,54979311,1146,17.8,-45.695,-49.752,-47.553,-39.079,-6.616,-45.695,-44.489,-40.274,-28.191,-17.505,cache/frames_ZMOne_tikhonov_Franck.npz
+Franck,tikhonov_ordlim,54979311,1146,13.7,-45.695,-49.754,-47.780,-48.928,3.233,-45.695,-44.491,-40.504,-38.544,-7.152,cache/frames_ZMOne_tikhonov_ordlim_Franck.npz
+Franck,softlimit_20,54979311,1146,13.9,-45.727,-49.803,-51.505,-49.245,3.517,-45.727,-44.544,-44.264,-38.625,-7.102,cache/frames_ZMOne_softlimit_20_Franck.npz
+Franck,softlimit_30,54979311,1146,13.8,-45.694,-49.558,-47.681,-40.476,-5.218,-45.694,-44.308,-40.398,-29.530,-16.164,cache/frames_ZMOne_softlimit_30_Franck.npz
+Franck,softlimit_40,54979311,1146,13.8,-45.691,-49.495,-44.633,-32.359,-13.331,-45.691,-44.249,-37.238,-21.206,-24.485,cache/frames_ZMOne_softlimit_40_Franck.npz
+Franck,mmse_20,54979311,1146,13.8,-45.697,-49.943,-55.873,-66.848,21.151,-45.697,-44.682,-48.669,-58.064,12.367,cache/frames_ZMOne_mmse_20_Franck.npz
+Prokofiev,factory,47232000,984,6.3,-22.838,-31.481,-40.903,-48.841,26.003,-22.838,-26.270,-33.670,-40.254,17.416,cache/frames_ZMOne_factory_Prokofiev.npz
+Prokofiev,tikhonov,47416239,988,15.6,-45.219,-49.341,-47.205,-38.940,-6.278,-45.219,-44.120,-39.940,-28.088,-17.130,cache/frames_ZMOne_tikhonov_Prokofiev.npz
+Prokofiev,tikhonov_ordlim,47416239,988,12.0,-45.219,-49.344,-47.473,-46.796,1.578,-45.219,-44.122,-40.213,-36.361,-8.858,cache/frames_ZMOne_tikhonov_ordlim_Prokofiev.npz
+Prokofiev,softlimit_20,47416239,988,12.0,-45.252,-49.366,-50.843,-48.444,3.192,-45.252,-44.150,-43.632,-37.919,-7.333,cache/frames_ZMOne_softlimit_20_Prokofiev.npz
+Prokofiev,softlimit_30,47416239,988,11.9,-45.217,-49.108,-47.207,-40.109,-5.108,-45.217,-43.901,-39.938,-29.205,-16.012,cache/frames_ZMOne_softlimit_30_Prokofiev.npz
+Prokofiev,softlimit_40,47416239,988,11.9,-45.213,-49.037,-43.924,-32.296,-12.918,-45.213,-43.834,-36.510,-21.141,-24.073,cache/frames_ZMOne_softlimit_40_Prokofiev.npz
+Prokofiev,mmse_20,47416239,988,11.9,-45.220,-49.510,-54.437,-64.886,19.666,-45.220,-44.289,-47.237,-56.096,10.876,cache/frames_ZMOne_mmse_20_Prokofiev.npz

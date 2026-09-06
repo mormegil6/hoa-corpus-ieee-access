@@ -4,8 +4,9 @@ Render the Fig. 4 geographic maps on their own, without running the rest of the
 audio-driven pipeline.
 
 Reads plots/pub_fig04_geographic_map.csv by default, so it works from a clean
-checkout. Pass --from-metadata to rebuild from the session metadata YAMLs
-instead (authors only; those are not distributed).
+checkout. Pass --from-metadata to rebuild from data/metadata/<session>.yaml
+instead; that directory is not part of this repository (the deposit ships one
+metadata.yaml per session under sessions/<id>/).
 """
 import argparse
 import sys

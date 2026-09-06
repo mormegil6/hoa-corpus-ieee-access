@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """
-Revision figures for the IEEE Access resubmission (Access-2026-28350).
+Figures 9, 10a and 10b of the HOA corpus paper with bootstrap confidence intervals.
 
-Reads the bootstrap outputs of revision_stats.py (AES pipeline repo) and
-renders, in the same IEEE single-column style as render_ieee_figures.py:
+Reads the bootstrap outputs of revision_stats.py and renders, in the same IEEE
+single-column style as render_ieee_figures.py:
 
   pub_fig09_spatial_energy_2piece.png   Franck | Prokofiev side-by-side
-                                        per-order RMS with 95% CIs  [R3.6]
-  pub_fig10a_w_channel_level_ci.png     W level with 95% CIs        [R3.6]
-  pub_fig10b_xyz_normalized_ci.png      X/Y/Z over W with 95% CIs   [R3.6]
+                                        per-order RMS with 95% CIs
+                                        + ideal SN3D diffuse-field profiles
+  pub_fig10a_w_channel_level_ci.png     W level with 95% CIs (Franck)
+  pub_fig10b_xyz_normalized_ci.png      X/Y/Z over W with 95% CIs (Franck)
 
 Usage:
     python revision_figures.py
 """
 
+import argparse
 import csv
 import os
 from pathlib import Path
@@ -22,6 +24,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 # Paths are resolved relative to this file so the script runs from a clean clone.
 # Override the figure output directory with the IEEE_FIG_DIR environment variable
@@ -75,6 +78,11 @@ def fig09_two_piece(rows):
                         marker=MIC_MARKERS[mic], color=MIC_COLORS[mic],
                         markersize=5, linewidth=1.5, linestyle='--',
                         alpha=0.9, capsize=2, elinewidth=0.7, label=mic)
+            if orders[-1] >= 3:
+                ideal = [vals[0] - 10 * np.log10(2 * o + 1) for o in orders]
+                # zorder between the grid (1.5) and the measured curves (2)
+                ax.plot(orders, ideal, color=MIC_COLORS[mic], linestyle='--',
+                        linewidth=0.8, alpha=0.5, zorder=1.8)
         ax.set_xticks(range(6))
         ax.set_xticklabels(['0th\n(W)', '1st', '2nd', '3rd', '4th', '5th'],
                            fontsize=FS_TICK)
@@ -84,8 +92,14 @@ def fig09_two_piece(rows):
         ax.tick_params(axis='both', labelsize=FS_TICK)
         ax.grid(True, axis='both', alpha=0.3, linewidth=0.5)
     axes[0].set_ylabel('RMS Level (dBFS)', fontsize=FS_LABEL)
-    axes[1].legend(fontsize=FS_LEGEND, framealpha=0.9, edgecolor='0.8',
-                   borderpad=0.4, handlelength=1.5, loc='lower left')
+    arrays = axes[1].legend(fontsize=FS_LEGEND, framealpha=0.9, edgecolor='0.8',
+                            borderpad=0.4, handlelength=1.5, loc='lower left')
+    # separate legend: a fifth row at lower left would cover the ZM-1 2nd-order point
+    axes[1].add_artist(arrays)
+    axes[1].legend([Line2D([], [], color='0.4', linestyle='--', linewidth=0.8)],
+                   ['ideal SN3D diffuse-field profile'], fontsize=FS_LEGEND,
+                   framealpha=0.9, edgecolor='0.8', borderpad=0.4,
+                   handlelength=1.5, loc='upper right')
     fig.tight_layout(pad=0.3)
     out = IEEE_FIG_DIR / "pub_fig09_spatial_energy_2piece.png"
     fig.savefig(out, dpi=DPI, bbox_inches='tight')
@@ -151,5 +165,6 @@ def fig10_ci(rows):
 
 
 if __name__ == "__main__":
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
     fig09_two_piece(load_rows("spatial_energy_two_piece.csv"))
     fig10_ci(load_rows("directional_ci.csv"))

@@ -1,0 +1,33 @@
+{
+  "file": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav",
+  "seconds": 60,
+  "bank": "tikhonov",
+  "n_input_samples": 2880000,
+  "n_output_samples": 2880511,
+  "max_abs_sample_diff": 9.618145053319482e-08,
+  "ref_peak_abs": 0.19597237787070432,
+  "max_abs_sample_diff_rel_to_peak": 4.907908531714197e-07,
+  "per_order_energy_ref": [
+    24.934097497271313,
+    33.802025360022256,
+    89.58845625500567,
+    1456.0381781160386
+  ],
+  "per_order_energy_stream": [
+    24.934097727179186,
+    33.802022616793025,
+    89.58843933183182,
+    1456.0381243463385
+  ],
+  "max_abs_per_order_energy_diff": 5.3769700116390595e-05,
+  "max_rel_per_order_energy_diff": 1.888990451762471e-07,
+  "frames_max_abs_diff": 1.5462262595633547e-05,
+  "frames_max_rel_diff": 2.538551336026229e-05,
+  "frames_counts_equal": true,
+  "n_frames": 61,
+  "last_frame_count": 255,
+  "t_reference_s": 7.024746749986662,
+  "t_streaming_s": 0.9057314170058817,
+  "nfft": 65536,
+  "blocksize": 65025
+}

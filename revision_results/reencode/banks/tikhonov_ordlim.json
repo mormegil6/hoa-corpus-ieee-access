@@ -1,0 +1,79 @@
+{
+  "name": "tikhonov_ordlim",
+  "encoder_kind": "modeled",
+  "reg_method": "tikhonov",
+  "n_order": 3,
+  "max_gain_db": 30.0,
+  "max_gain_db_used_by_reg": false,
+  "snr_prior_db": 20.0,
+  "snr_prior_db_used_by_reg": false,
+  "noise_psd_file": "capsule_noise_psd_simulated.npy",
+  "noise_psd_sha256": "a0246b4f44250e4c3d4f5ee2a7ba0d624a0cac70b04250c28d874dcfad7ec25c",
+  "noise_psd_used": false,
+  "noise_psd_provenance": "simulated capsule self-noise (zm1_encoder.simulate, 5 s, seed 0, Welch PSD); no measured noise spectrum",
+  "order_limit": true,
+  "order_bands_hz": {
+    "0": [
+      20.0,
+      20000.0
+    ],
+    "1": [
+      20.0,
+      3870.0
+    ],
+    "2": [
+      170.0,
+      3330.0
+    ],
+    "3": [
+      660.0,
+      3080.0
+    ]
+  },
+  "order_taper_oct": 0.5,
+  "maxre_taper": false,
+  "lambda_schedule": {
+    "LAMBDA_MIN": 0.0001,
+    "LAMBDA_MAX": 0.1,
+    "LAMBDA_KNEE_HZ": 200.0,
+    "LAMBDA_ALIAS_HZ": 3000.0
+  },
+  "enc_objective": "complex",
+  "R_SPHERE": 0.049,
+  "C_SOUND": 343.0,
+  "NFFT": 8192,
+  "FS": 48000,
+  "FIR_LENGTH": 512,
+  "FIR_WINDOW": "hann",
+  "modelling_delay_samples": 256,
+  "sh_norm": "sn3d",
+  "channel_order": "acn",
+  "bank_shape": [
+    16,
+    19,
+    512
+  ],
+  "bank_dtype": "float32",
+  "fir_rms_gain_db_max": -21.916501326888014,
+  "capsule_channels": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ]
+}

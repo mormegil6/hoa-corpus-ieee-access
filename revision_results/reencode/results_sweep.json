@@ -1,0 +1,290 @@
+{
+  "tikhonov/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.695415117619845,
+      -49.752274552442415,
+      -47.553165329212305,
+      -39.079251504255666
+    ],
+    "order_levels_sum_dbfs": [
+      -45.695415117619845,
+      -44.48913406040779,
+      -40.27384837181646,
+      -28.190848784130548
+    ],
+    "rolloff_0_3_meanrms_db": -6.616163613364179,
+    "rolloff_0_3_sum_db": -17.504566333489297,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "tikhonov",
+    "cache_path": "cache/frames_ZMOne_tikhonov_Franck.npz",
+    "runtime_s": 17.808736624981975,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "tikhonov/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.21871855484905,
+      -49.34086832419873,
+      -47.205300642873745,
+      -38.94039602080316
+    ],
+    "order_levels_sum_dbfs": [
+      -45.21871855484905,
+      -44.11958112674894,
+      -39.94049163434322,
+      -28.08823659015124
+    ],
+    "rolloff_0_3_meanrms_db": -6.278322534045884,
+    "rolloff_0_3_sum_db": -17.130481964697807,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "tikhonov",
+    "cache_path": "cache/frames_ZMOne_tikhonov_Prokofiev.npz",
+    "runtime_s": 15.575269541004673,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  },
+  "tikhonov_ordlim/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.695415117619845,
+      -49.75402089590378,
+      -47.779894397421245,
+      -48.92806494954599
+    ],
+    "order_levels_sum_dbfs": [
+      -45.695415117619845,
+      -44.490644367231084,
+      -40.50375071625463,
+      -38.54379587602659
+    ],
+    "rolloff_0_3_meanrms_db": 3.232649831926146,
+    "rolloff_0_3_sum_db": -7.151619241593252,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "tikhonov_ordlim",
+    "cache_path": "cache/frames_ZMOne_tikhonov_ordlim_Franck.npz",
+    "runtime_s": 13.698555166018195,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "tikhonov_ordlim/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.21871855484905,
+      -49.34364971057501,
+      -47.4725667012856,
+      -46.79634554060266
+    ],
+    "order_levels_sum_dbfs": [
+      -45.21871855484905,
+      -44.12203204251496,
+      -40.21300905133074,
+      -36.360831652223304
+    ],
+    "rolloff_0_3_meanrms_db": 1.5776269857536107,
+    "rolloff_0_3_sum_db": -8.857886902625744,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "tikhonov_ordlim",
+    "cache_path": "cache/frames_ZMOne_tikhonov_ordlim_Prokofiev.npz",
+    "runtime_s": 11.991726749984082,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  },
+  "softlimit_20/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.7274691985848,
+      -49.802674282601515,
+      -51.504892707585114,
+      -49.244840752023826
+    ],
+    "order_levels_sum_dbfs": [
+      -45.7274691985848,
+      -44.5444839780004,
+      -44.26423796588119,
+      -38.62542138369007
+    ],
+    "rolloff_0_3_meanrms_db": 3.517371553439027,
+    "rolloff_0_3_sum_db": -7.102047814894732,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "softlimit_20",
+    "cache_path": "cache/frames_ZMOne_softlimit_20_Franck.npz",
+    "runtime_s": 13.924301666003885,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "softlimit_20/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.25193723119524,
+      -49.366059405960875,
+      -50.84339360367793,
+      -48.4441420934315
+    ],
+    "order_levels_sum_dbfs": [
+      -45.25193723119524,
+      -44.14969417515862,
+      -43.631994757970205,
+      -37.91896658798551
+    ],
+    "rolloff_0_3_meanrms_db": 3.1922048622362595,
+    "rolloff_0_3_sum_db": -7.332970643209734,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "softlimit_20",
+    "cache_path": "cache/frames_ZMOne_softlimit_20_Prokofiev.npz",
+    "runtime_s": 11.959624208975583,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  },
+  "softlimit_30/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.693952940047126,
+      -49.55784520352576,
+      -47.68067163017827,
+      -40.475623487726075
+    ],
+    "order_levels_sum_dbfs": [
+      -45.693952940047126,
+      -44.308032550033374,
+      -40.39836161799169,
+      -29.53023861865981
+    ],
+    "rolloff_0_3_meanrms_db": -5.218329452321051,
+    "rolloff_0_3_sum_db": -16.163714321387317,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "softlimit_30",
+    "cache_path": "cache/frames_ZMOne_softlimit_30_Franck.npz",
+    "runtime_s": 13.781323582981713,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "softlimit_30/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.21684154736341,
+      -49.10808491041557,
+      -47.207011988412944,
+      -40.10860105318115
+    ],
+    "order_levels_sum_dbfs": [
+      -45.21684154736341,
+      -43.90113124599688,
+      -39.93787023148712,
+      -29.205156197359674
+    ],
+    "rolloff_0_3_meanrms_db": -5.108240494182262,
+    "rolloff_0_3_sum_db": -16.011685350003734,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "softlimit_30",
+    "cache_path": "cache/frames_ZMOne_softlimit_30_Prokofiev.npz",
+    "runtime_s": 11.855086416995618,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  },
+  "softlimit_40/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.69055278502518,
+      -49.495296829063086,
+      -44.63327628697331,
+      -32.35906427488046
+    ],
+    "order_levels_sum_dbfs": [
+      -45.690552785025176,
+      -44.24897528036881,
+      -37.23849273469713,
+      -21.20598829933419
+    ],
+    "rolloff_0_3_meanrms_db": -13.331488510144723,
+    "rolloff_0_3_sum_db": -24.484564485690985,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "softlimit_40",
+    "cache_path": "cache/frames_ZMOne_softlimit_40_Franck.npz",
+    "runtime_s": 13.773951083014254,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "softlimit_40/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.213280197804984,
+      -49.03671213152102,
+      -43.92390969413299,
+      -32.29575396539359
+    ],
+    "order_levels_sum_dbfs": [
+      -45.213280197804984,
+      -43.83367663880965,
+      -36.510032651910635,
+      -21.140512623458562
+    ],
+    "rolloff_0_3_meanrms_db": -12.917526232411397,
+    "rolloff_0_3_sum_db": -24.072767574346422,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "softlimit_40",
+    "cache_path": "cache/frames_ZMOne_softlimit_40_Prokofiev.npz",
+    "runtime_s": 11.90294533301494,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  },
+  "mmse_20/Franck": {
+    "order_levels_meanrms_dbfs": [
+      -45.69709618547299,
+      -49.943458750536756,
+      -55.87290897166034,
+      -66.84778691930282
+    ],
+    "order_levels_sum_dbfs": [
+      -45.69709618547299,
+      -44.68166101432317,
+      -48.668733282141694,
+      -58.06393860816267
+    ],
+    "rolloff_0_3_meanrms_db": 21.150690733829833,
+    "rolloff_0_3_sum_db": 12.366842422689686,
+    "n_samples": 54979311,
+    "n_frames": 1146,
+    "piece": "Franck",
+    "config": "mmse_20",
+    "cache_path": "cache/frames_ZMOne_mmse_20_Franck.npz",
+    "runtime_s": 13.75260825001169,
+    "n_input_samples": 54979056,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_CFranck-PreludeChoralFugue.wav"
+  },
+  "mmse_20/Prokofiev": {
+    "order_levels_meanrms_dbfs": [
+      -45.22013347696913,
+      -49.50952345193518,
+      -54.43671516312158,
+      -64.8864405163618
+    ],
+    "order_levels_sum_dbfs": [
+      -45.22013347696913,
+      -44.28896968157619,
+      -47.23742222555117,
+      -56.096010635017606
+    ],
+    "rolloff_0_3_meanrms_db": 19.66630703939267,
+    "rolloff_0_3_sum_db": 10.875877158048475,
+    "n_samples": 47416239,
+    "n_frames": 988,
+    "piece": "Prokofiev",
+    "config": "mmse_20",
+    "cache_path": "cache/frames_ZMOne_mmse_20_Prokofiev.npz",
+    "runtime_s": 11.86450745901675,
+    "n_input_samples": 47415984,
+    "source": "sessions/2024-08-15_aula-pg_solo-piano-mic-comparison/audio_a_format/AFORMAT_ZM1_SProkofiev-Sonata4.wav"
+  }
+}

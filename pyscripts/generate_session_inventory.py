@@ -2,14 +2,18 @@
 """
 Generate Session Inventory Table for LaTeX
 
-Creates a comprehensive table of all recording sessions for the paper's
-supplementary material or appendix.
+Creates the LaTeX table of all recording sessions (data/session_inventory_table.tex,
+read by the manuscript). Reads data/metadata/<session>.yaml, the authors'
+per-session metadata files, which this repository does not ship; the deposit
+carries one metadata.yaml per session under sessions/<id>/.
 
 Author: Bartłomiej Mróz
 Date: 2026-01-28
 """
 
+import argparse
 import os
+import sys
 import yaml
 from pathlib import Path
 from datetime import datetime
@@ -76,7 +80,7 @@ def get_venue_abbrev(venue_name, city):
     """Create abbreviated venue name."""
     if not venue_name:
         return city or "Unknown"
-    
+
     # Known abbreviations
     if "Aula Politechniki" in venue_name:
         return "Aula PG"
@@ -144,7 +148,7 @@ MIC_COMPARISON_SESSION = 18  # 2024-08-15
 
 def generate_latex_table(sessions):
     """Generate LaTeX table for session inventory."""
-    
+
     # Sort by date
     def get_date(s):
         # Handle both 'recording_date' and 'recording_dates' fields
@@ -159,9 +163,9 @@ def generate_latex_table(sessions):
             return datetime.strptime(str(date_str), '%Y-%m-%d')
         except:
             return datetime(1900, 1, 1)
-    
+
     sessions_sorted = sorted(sessions, key=get_date)
-    
+
     # Generate table
     lines = []
     lines.append(r"% Session Inventory Table - Auto-generated")
@@ -171,11 +175,11 @@ def generate_latex_table(sessions):
     lines.append(r"    \centering")
     lines.append(r"    \caption{Complete Session Inventory}\label{tab:session_inventory}")
     lines.append(r"    \small")
-    lines.append(r"    \begin{tabular}{@{}rllllr@{}}")
+    lines.append(r"    \begin{tabular}{@{}rlll l@{\hspace{4pt}}r@{}}")
     lines.append(r"        \toprule")
     lines.append(r"        No. & Date & Venue & Content & Mic & Dur. \\")
     lines.append(r"        \midrule")
-    
+
     for i, session in enumerate(sessions_sorted, 1):
         # Handle both 'recording_date' and 'recording_dates' fields
         date = session.get('recording_date')
@@ -183,7 +187,7 @@ def generate_latex_table(sessions):
             dates = session.get('recording_dates', [])
             if dates and isinstance(dates, list):
                 date = dates[0]
-        
+
         if date:
             try:
                 dt = datetime.strptime(str(date), '%Y-%m-%d')
@@ -192,7 +196,7 @@ def generate_latex_table(sessions):
                 date_fmt = str(date)
         else:
             date_fmt = '-'
-        
+
         venue = get_venue_abbrev(session.get('venue_name', ''), session.get('city', ''))
         content = get_content_type_abbrev(session.get('content_type', ''))
         mic = get_mic_abbreviation(session.get('primary_mic_model', ''))
@@ -201,35 +205,35 @@ def generate_latex_table(sessions):
             dur_str = f"{duration:.0f}"
         else:
             dur_str = "-"
-        
+
         # Handle special cases
         # Microphone comparison session
         if i == MIC_COMPARISON_SESSION:
             content = "Comparison*"
             mic = "Multi"
-        
+
         # Add dagger for sessions with secondary microphones
         if i in SESSIONS_WITH_SECONDARY_MIC:
             content = content + r"$^\dagger$"
-        
+
         # Escape LaTeX special chars (but not our added LaTeX commands)
         venue = escape_latex(venue)
         # Don't escape content if it has our LaTeX commands
         if r"$^\dagger$" not in content:
             content = escape_latex(content)
-        
+
         lines.append(f"        {i} & {date_fmt} & {venue} & {content} & {mic} & {dur_str} \\\\")
-    
+
     lines.append(r"        \botrule")
     lines.append(r"    \end{tabular}")
     lines.append(r"")
     lines.append(r"    \smallskip")
-    
+
     # Build footnote with secondary mic sessions grouped
     ntsf1_sessions = [str(s) for s in sorted(SESSIONS_WITH_SECONDARY_MIC.keys()) if SESSIONS_WITH_SECONDARY_MIC[s] == 'NT-SF1']
     spcmic_sessions = [str(s) for s in sorted(SESSIONS_WITH_SECONDARY_MIC.keys()) if SESSIONS_WITH_SECONDARY_MIC[s] == 'Spcmic']
-    
-    footnote = r"    \footnotesize{Duration in minutes. Mic: ZM-1 = Zylia ZM-1, Spcmic = Harpex Spcmic, Multi = ZM-1 + Spcmic + SR-VRMIC. *Microphone comparison session (Section~4). $^\dagger$ Secondary microphone: "
+
+    footnote = r"    \footnotesize{Duration in minutes. Mic: ZM-1 = Zylia ZM-1, Spcmic = Harpex Spcmic, Multi = ZM-1 + Spcmic + SR-VRMIC. *Microphone comparison session (Section~\ref{sec:comparison}). $^\dagger$ Secondary microphone: "
     if ntsf1_sessions:
         footnote += f"NT-SF1 (sessions {', '.join(ntsf1_sessions)})"
     if spcmic_sessions:
@@ -237,10 +241,10 @@ def generate_latex_table(sessions):
             footnote += " or "
         footnote += f"Spcmic (session {', '.join(spcmic_sessions)})"
     footnote += ".}"
-    
+
     lines.append(footnote)
     lines.append(r"\end{table}")
-    
+
     return '\n'.join(lines)
 
 
@@ -248,21 +252,25 @@ def main():
     print("="*60)
     print("GENERATING SESSION INVENTORY TABLE")
     print("="*60)
-    
+
     sessions = load_all_metadata()
     print(f"Loaded {len(sessions)} sessions")
-    
+    if not sessions:
+        sys.exit(f"no session metadata found in {METADATA_DIR}; the committed "
+                 "data/session_inventory_table.tex is left untouched")
+
     latex_table = generate_latex_table(sessions)
-    
+
     # Save to file
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     output_path = OUTPUT_DIR / "session_inventory_table.tex"
     with open(output_path, 'w') as f:
-        f.write(latex_table)
-    
+        f.write(latex_table if latex_table.endswith("\n") else latex_table + "\n")
+
     print(f"\nGenerated: {output_path}")
     print("\nTo include in main.tex, add:")
     print(r"    \input{session_inventory_table.tex}")
-    
+
     # Also print to console for review
     print("\n" + "="*60)
     print("GENERATED TABLE:")
@@ -271,4 +279,5 @@ def main():
 
 
 if __name__ == "__main__":
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
     main()

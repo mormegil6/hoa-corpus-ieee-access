@@ -1,0 +1,7 @@
+piece,device,role,sample_rate_hz,raw_leading_offset_s,crop_start_s,crop_end_s,tail_untrimmed,frames_kept,duration_s,verify_start_lag_ms,verify_start_r,verify_end_lag_ms,verify_end_r,clock_rate_diff_ppm
+Franck,ZM-1,reference,48000,,3.94,1149.337,0,54979056,1145.397000,,,,,
+Franck,SR-VRMIC,aligned,48000,28.06,32.0,1177.397,0,54979056,1145.397000,0.35,0.887,-9.85,0.851,-8.60
+Franck,Spcmic,aligned,48000,7.788,11.728,,1,54979057,1145.397021,0.04,0.936,-8.06,0.907,-7.04
+Prokofiev,ZM-1,reference,48000,,4.52,992.353,0,47415984,987.833000,,,,,
+Prokofiev,SR-VRMIC,aligned,48000,62.48,67.0,1054.833,0,47415984,987.833000,0.04,0.856,-8.94,0.783,-9.05
+Prokofiev,Spcmic,aligned,48000,4.102,8.622,,1,47415980,987.832917,0.60,0.912,-6.58,0.814,-6.66

@@ -1,76 +1,75 @@
 session,filename,duration,duration_seconds,normalization_db,peak_db,true_peak_db,clips,tp_clips,lufs_m_max,lufs_s_max,lufs_i,lra,stats_file
-"2022.03.25 -- Baltic sea pier in Sopot, Poland",3OA_ZM1_SopotPier.wav,11:25.000,685.0,,-0.5,-0.5,0,0,-26.6,12.2,-35.0,12.200000000000003,3OA_ZM1_SopotPier.render_stats.html
-"2023.12.07 -- piano, bass, vocal, violin, percussives",3OA_ZM1_band.wav,8:17.665,497.665,,-0.5,-0.5,0,0,-9.7,11.4,-16.08,11.399999999999999,3OA_ZM1_band.render_stats.html
-2019.04.12 -- the passion concert,3OA_ZM1_PassionConcert.wav,1:19:32.517,4772.517,,-0.5,-0.5,0,0,-12.0,22.0,-20.75,22.000000000000004,3OA_ZM1_PassionConcert.render_stats.html
-2021.03.27 -- piano recording,3OA_ZM1_CDebussy-Wrzosy.wav,3:36.000,216.0,,-5.7,-5.7,0,0,-17.7,15.9,-24.02,15.900000000000002,3OA_ZM1_CDebussy-Wrzosy.render_stats.html
-2021.03.27 -- piano recording,3OA_ZM1_EGrieg-LetniWieczor.wav,2:58.986,178.986,,-2.0,-2.0,0,0,-14.2,17.6,-24.01,17.6,3OA_ZM1_EGrieg-LetniWieczor.render_stats.html
-2021.03.27 -- piano recording,3OA_ZM1_ORespighi-Notturno.wav,6:30.000,390.0,,-0.8,-0.8,0,0,-13.5,19.2,-21.92,19.2,3OA_ZM1_ORespighi-Notturno.render_stats.html
-2021.03.27 -- piano recording,3OA_ZM1_PGrainger-BridalLullaby.wav,3:12.000,192.0,,-7.3,-7.3,0,0,-19.2,12.2,-25.3,12.199999999999996,3OA_ZM1_PGrainger-BridalLullaby.render_stats.html
-2021.06.27 -- choir recording,1OA_NTSF1_IDenisova-CherubicHymn.wav,4:03.000,243.0,2.4,0.0,0.0,0,0,-24.1,-14.6,-24.13,20.3,1OA_NTSF1_IDenisova-CherubicHymn.render_stats.html
-2021.06.27 -- choir recording,1OA_NTSF1_JJunek-BogoroditseDevo.wav,3:31.500,211.5,2.4,0.0,0.0,0,0,-19.5,-11.6,-19.51,18.1,1OA_NTSF1_JJunek-BogoroditseDevo.render_stats.html
-2021.06.27 -- choir recording,1OA_NTSF1_JMaklakiewicz-Kołysanka.wav,2:34.500,154.5,2.4,0.0,0.0,0,0,-23.2,-14.4,-23.18,19.700000000000003,1OA_NTSF1_JMaklakiewicz-Kołysanka.render_stats.html
-2021.06.27 -- choir recording,1OA_NTSF1_MRaczynski-LaudateDominum.wav,3:12.000,192.0,2.4,0.0,0.0,0,0,-18.9,-8.4,-18.92,18.7,1OA_NTSF1_MRaczynski-LaudateDominum.render_stats.html
-2021.06.27 -- choir recording,1OA_NTSF1_VMiskinis-OSalutarisHostia.wav,3:19.000,199.0,2.4,0.0,0.0,0,0,-18.8,-11.0,-18.78,20.499999999999996,1OA_NTSF1_VMiskinis-OSalutarisHostia.render_stats.html
-2021.06.27 -- choir recording,3OA_ZM1_IDenisova-CherubicHymn.wav,4:03.000,243.0,,-5.8,-5.8,0,0,-14.9,16.6,-25.45,16.6,3OA_ZM1_IDenisova-CherubicHymn.render_stats.html
-2021.06.27 -- choir recording,3OA_ZM1_JJunek-BogoroditseDevo.wav,3:31.500,211.5,,-2.9,-2.9,0,0,-10.3,17.7,-19.84,17.699999999999996,3OA_ZM1_JJunek-BogoroditseDevo.render_stats.html
-2021.06.27 -- choir recording,3OA_ZM1_JMaklakiewicz-Kołysanka.wav,2:34.500,154.5,,-5.7,-5.7,0,0,-15.2,18.4,-24.45,18.4,3OA_ZM1_JMaklakiewicz-Kołysanka.render_stats.html
-2021.06.27 -- choir recording,3OA_ZM1_MRaczynski-LaudateDominum.wav,3:12.000,192.0,,-1.2,-1.2,0,0,-7.6,17.9,-18.82,17.9,3OA_ZM1_MRaczynski-LaudateDominum.render_stats.html
-2021.06.27 -- choir recording,3OA_ZM1_VMiskinis-OSalutarisHostia.wav,3:19.000,199.0,,-3.8,-3.8,0,0,-10.5,21.1,-18.9,21.1,3OA_ZM1_VMiskinis-OSalutarisHostia.render_stats.html
-2022.03.10 -- WETI Faculty 70 jubilee concert,3OA_ZM1_JubileeConcertPt1.wav,28:20.500,1700.5,,-7.1,-7.1,0,0,-15.9,22.8,-27.28,22.799999999999997,3OA_ZM1_JubileeConcertPt1.render_stats.html
-2022.03.10 -- WETI Faculty 70 jubilee concert,3OA_ZM1_JubileeConcertPt2.wav,39:10.000,2350.0,,-0.5,-0.5,0,0,-13.0,18.3,-23.83,18.299999999999997,3OA_ZM1_JubileeConcertPt2.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_FChopin-Revolutionary.wav,2:30.000,150.0,,-2.9,-2.9,0,0,-15.7,10.2,-19.28,10.2,3OA_ZM1_FChopin-Revolutionary.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_JHaydn-Sonata1.wav,6:59.000,419.0,,-7.5,-7.5,0,0,-20.1,17.1,-27.29,17.1,3OA_ZM1_JHaydn-Sonata1.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_JHaydn-Sonata2.wav,6:59.000,419.0,,-0.5,-0.5,0,0,-15.4,10.7,-20.23,10.7,3OA_ZM1_JHaydn-Sonata2.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_JHaydn-Sonata3.wav,4:17.000,257.0,,-6.9,-6.9,0,0,-18.7,10.4,-24.23,10.400000000000002,3OA_ZM1_JHaydn-Sonata3.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_JSBach-PreludeFuge1.wav,13:28.000,808.0,,-8.1,-8.1,0,0,-20.4,14.6,-27.38,14.600000000000001,3OA_ZM1_JSBach-PreludeFuge1.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_JSBach-PreludeFuge2.wav,4:19.000,259.0,,-9.1,-9.1,0,0,-21.7,14.0,-27.72,14.0,3OA_ZM1_JSBach-PreludeFuge2.render_stats.html
-2022.04.13-14 -- piano recording,3OA_ZM1_MRavel-Valse.wav,13:04.000,784.0,,-1.1,-1.1,0,0,-13.0,15.6,-20.36,15.6,3OA_ZM1_MRavel-Valse.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert01.wav,7:30.000,450.0,,-0.5,-0.5,0,0,-8.7,16.0,-16.26,16.0,3OA_ZM1_CharityConcert01.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert02.wav,5:48.000,348.0,,-0.5,-0.5,0,0,-11.0,11.9,-17.56,11.9,3OA_ZM1_CharityConcert02.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert03.wav,5:48.000,348.0,,-0.5,-0.5,0,0,-10.9,22.2,-20.01,22.2,3OA_ZM1_CharityConcert03.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert04.wav,5:20.000,320.0,,-0.5,-0.5,0,0,-9.5,19.5,-17.76,19.5,3OA_ZM1_CharityConcert04.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert05.wav,13:36.000,816.0,,-0.5,-0.5,0,0,-8.9,17.6,-19.21,17.6,3OA_ZM1_CharityConcert05.render_stats.html
-2022.04.21 -- charity concert for Ukraine,3OA_ZM1_CharityConcert06.wav,7:36.000,456.0,,-0.5,-0.5,0,0,-11.5,22.7,-15.34,22.7,3OA_ZM1_CharityConcert06.render_stats.html
-2022.06.27 -- piano recording,3OA_ZM1_FChopin-Revolutionary.wav,2:42.000,162.0,,-0.5,-0.5,0,0,-13.8,12.8,-17.66,12.799999999999999,3OA_ZM1_FChopin-Revolutionary.render_stats.html
-2022.06.27 -- piano recording,3OA_ZM1_FLiszt-PaganiniVariations.wav,5:30.000,330.0,,-1.2,-1.2,0,0,-11.1,14.4,-16.96,14.400000000000002,3OA_ZM1_FLiszt-PaganiniVariations.render_stats.html
-2022.06.27 -- piano recording,3OA_ZM1_JSBach-PreludeFugeC.wav,4:14.000,254.0,,-8.4,-8.4,0,0,-19.7,14.2,-26.44,14.200000000000003,3OA_ZM1_JSBach-PreludeFugeC.render_stats.html
-2022.06.27 -- piano recording,3OA_ZM1_LvBeethoven-Sonata.wav,20:26.000,1226.0,,-1.8,-1.8,0,0,-13.2,17.8,-21.64,17.799999999999997,3OA_ZM1_LvBeethoven-Sonata.render_stats.html
-2022.06.27 -- piano recording,3OA_ZM1_SRachmaninov-Prelude.wav,5:58.000,358.0,,-1.9,-1.9,0,0,-14.4,23.2,-21.14,23.199999999999996,3OA_ZM1_SRachmaninov-Prelude.render_stats.html
-2023.02.21 -- carnival concert,3OA_ZM1_Concert.wav,1:26:36.783,5196.783,,-0.5,-0.5,0,0,-12.4,19.6,-21.43,19.599999999999998,3OA_ZM1_Concert.render_stats.html
-2023.06.03 -- Deus Ex Machina,1OA_NTSF1_JNeske-DeusExMachina.wav,4:20.000,260.0,-0.2,-0.5,-0.5,0,0,19.8,19.8,-18.18,19.799999999999997,1OA_NTSF1_JNeske-DeusExMachina.render_stats.html
-2023.06.03 -- Deus Ex Machina,3OA_ZM1_JNeske-DeusExMachina.wav,4:20.000,260.0,1.9,-0.5,-0.5,0,0,17.8,17.8,-17.27,17.799999999999997,3OA_ZM1_JNeske-DeusExMachina.render_stats.html
-2023.06.17 -- choir concert,3OA_ZM1_ChoirConcert.wav,1:21:44.000,4904.0,,-0.5,-0.5,0,0,-17.5,14.6,-26.06,14.599999999999998,3OA_ZM1_ChoirConcert.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_CDebussy-Canope.wav,3:45.184,225.184,,-15.8,-15.8,0,0,-29.8,16.5,-35.31,16.5,3OA_ZM1_CDebussy-Canope.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_CDebussy-Feux.wav,4:47.181,287.181,,-0.5,-0.5,0,0,-14.2,20.9,-20.36,20.900000000000002,3OA_ZM1_CDebussy-Feux.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_JHisaishi-AshitakaAndSan.wav,5:02.000,302.0,,-7.4,-7.4,0,0,-22.2,16.9,-28.12,16.900000000000002,3OA_ZM1_JHisaishi-AshitakaAndSan.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_JHisaishi-OneSummersDay.wav,4:38.603,278.603,,-9.3,-9.3,0,0,-21.7,17.7,-29.0,17.700000000000003,3OA_ZM1_JHisaishi-OneSummersDay.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_LGodowski-SuitaJawajska6.wav,3:55.500,235.5,,-0.5,-0.5,0,0,-13.8,14.4,-18.36,14.399999999999999,3OA_ZM1_LGodowski-SuitaJawajska6.render_stats.html
-2023.08.04 -- piano recording,3OA_ZM1_MRavel-Miroirs.wav,3:46.500,226.5,,-5.4,-5.4,0,0,-17.6,13.3,-25.38,13.300000000000004,3OA_ZM1_MRavel-Miroirs.render_stats.html
-2023.10.12 -- choir concert,3OA_ZM1_ChoirConcertPt1.wav,32:52.000,1972.0,,-0.5,-0.5,0,0,-18.0,21.4,-24.4,21.400000000000002,3OA_ZM1_ChoirConcertPt1.render_stats.html
-2023.10.12 -- choir concert,3OA_ZM1_ChoirConcertPt2.wav,41:30.346,2490.346,,-1.6,-1.6,0,0,-16.4,18.9,-25.1,18.900000000000002,3OA_ZM1_ChoirConcertPt2.render_stats.html
-2024.03.07 -- piano duet recording (Party),3OA_ZM1b_PARTYcz1.wav,3:53.000,233.0,,-7.2,-7.2,0,0,-22.9,13.3,-28.4,13.300000000000004,3OA_ZM1b_PARTYcz1.render_stats.html
-2024.03.07 -- piano duet recording (Party),3OA_ZM1b_PARTYcz2.wav,5:48.500,348.5,,-8.5,-8.5,0,0,-22.4,15.4,-28.58,15.399999999999999,3OA_ZM1b_PARTYcz2.render_stats.html
-2024.03.07 -- piano duet recording (Party),3OA_ZM1b_PARTYcz3.wav,4:13.500,253.5,,-10.2,-10.2,0,0,-22.6,8.5,-27.63,8.5,3OA_ZM1b_PARTYcz3.render_stats.html
-2024.03.07 -- piano duet recording (Party),3OA_ZM1b_PARTYcz4.wav,3:59.000,239.0,,-9.6,-9.6,0,0,-21.6,14.5,-28.33,14.5,3OA_ZM1b_PARTYcz4.render_stats.html
-2024.03.09 -- etno recording (Emigrah),3OA_ZM1_EmigrahGra.wav,4:40.500,280.5,,-0.5,-0.5,0,0,-11.7,7.0,-15.9,7.0,3OA_ZM1_EmigrahGra.render_stats.html
-2024.03.09 -- etno recording (Emigrah),3OA_ZM1_Widno.wav,14:29.500,869.5,,-0.5,-0.5,0,0,-15.9,14.3,-21.96,14.3,3OA_ZM1_Widno.render_stats.html
-2024.04.30 -- piano recording,3OA_ZM1_AGinastera-Sonata1.wav,15:21.500,921.5,,-0.5,-0.5,0,0,-11.5,21.8,-18.16,21.799999999999997,3OA_ZM1_AGinastera-Sonata1.render_stats.html
-2024.04.30 -- piano recording,5OA_Spcmic_AGinastera-Sonata1.wav,15:21.500,921.5,21.2,-0.5,-0.5,0,0,21.0,21.0,-15.84,21.0,5OA_Spcmic_AGinastera-Sonata1.render_stats.html
-2024.07.27 -- quarry,3OA_ZM1_scena1.wav,3:15.000,195.0,,-0.5,-0.5,0,0,-12.2,18.0,-18.8,18.0,3OA_ZM1_scena1.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,1OA_SRVRMIC_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,-0.5,-2.5,-2.5,0,0,17.2,17.2,-21.85,17.2,1OA_SRVRMIC_CFranck-PreludeChoralFugue.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,1OA_SRVRMIC_SProkofiev-Sonata4.wav,16:24.000,984.0,-0.5,-0.5,-0.5,0,0,19.4,19.4,-20.97,19.4,1OA_SRVRMIC_SProkofiev-Sonata4.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,3OA_Spcmic_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,12.0,-3.3,-3.3,0,0,17.1,17.1,-18.19,17.1,3OA_Spcmic_CFranck-PreludeChoralFugue.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,3OA_Spcmic_SProkofiev-Sonata4.wav,16:24.000,984.0,12.0,-0.5,-0.5,0,0,19.0,19.0,-17.29,19.0,3OA_Spcmic_SProkofiev-Sonata4.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,3OA_ZM1_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,-0.5,-0.8,-0.8,0,0,16.7,16.7,-21.48,16.700000000000003,3OA_ZM1_CFranck-PreludeChoralFugue.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,3OA_ZM1_SProkofiev-Sonata4.wav,16:24.000,984.0,-0.5,-0.5,-0.5,0,0,18.7,18.7,-20.62,18.700000000000003,3OA_ZM1_SProkofiev-Sonata4.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,5OA_Spcmic_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,12.0,-3.3,-3.3,0,0,17.1,17.1,-20.35,17.1,5OA_Spcmic_CFranck-PreludeChoralFugue.render_stats.html
-2024.08.15 -- ZM1 Spcmic Saramonic,5OA_Spcmic_SProkofiev-Sonata4.wav,16:24.000,984.0,12.0,-0.5,-0.5,0,0,19.4,19.4,-19.62,19.4,5OA_Spcmic_SProkofiev-Sonata4.render_stats.html
-2024.12.10 -- piano recording - Chopin,1OA_NTSF1_ChopinRecital.wav,24:48.283,1488.283,1.7,-0.5,-0.5,0,0,20.9,20.9,-17.03,20.900000000000002,1OA_NTSF1_ChopinRecital.render_stats.html
-2024.12.10 -- piano recording - Chopin,3OA_ZM1_ChopinRecital1.wav,24:48.283,1488.283,,-0.5,-0.5,0,0,-12.5,21.2,-19.83,21.2,3OA_ZM1_ChopinRecital1.render_stats.html
-2025.01.10 -- piano recording - Chopin,3OA_ZM1_ChopinRecital2.wav,15:12.000,912.0,,-0.5,-0.5,0,0,-13.4,18.7,-21.54,18.700000000000003,3OA_ZM1_ChopinRecital2.render_stats.html
-2025.02.05 -- Violin and piano,1OA_NTSF1_CFranck-Sonata.wav,15:42.000,942.0,,-3.4,-3.4,0,0,-14.9,17.4,-21.52,17.4,1OA_NTSF1_CFranck-Sonata.render_stats.html
-2025.02.05 -- Violin and piano,3OA_ZM1_CFranck-Sonata.wav,15:42.000,942.0,,-0.5,-0.5,0,0,-11.6,17.1,-18.64,17.1,3OA_ZM1_CFranck-Sonata.render_stats.html
-2025.09.28 -- film set cave,3OA_Spcmic_cave.wav,2:15.446,135.446,,-0.5,-0.5,0,0,-15.0,22.7,-22.4,22.7,3OA_Spcmic_cave.render_stats.html
-2025.09.28 -- film set cave,5OA_Spcmic_cave.wav,2:15.446,135.446,,-0.5,-0.5,0,0,-17.5,23.4,-25.2,23.4,5OA_Spcmic_cave.render_stats.html
-2026.01.18 -- choir concert of christmas carols,3OA_Spcmic_ChristmasCarolsConcert.wav,49:59.000,2999.0,-0.5,-0.5,-0.5,0,0,16.8,16.8,-25.96,16.8,3OA_Spcmic_ChristmasCarolsConcert.render_stats.html
-2026.01.18 -- choir concert of christmas carols,5OA_Spcmic_ChristmasCarolsConcert.wav,49:59.000,2999.0,9.4,-0.5,-0.5,0,0,17.6,17.6,-28.72,17.6,5OA_Spcmic_ChristmasCarolsConcert.render_stats.html
+2019-04-12_holy-trinity-church_choir-organ-strings,3OA_ZM1_PassionConcert.wav,1:19:32.517,4772.517,,-0.5,-0.5,0,0,-9.7,-12.0,-20.75,22.0,3OA_ZM1_PassionConcert.render_stats.html
+2021-03-27_aula-pg_solo-piano,3OA_ZM1_CDebussy-Wrzosy.wav,3:36.000,216.0,,-5.7,-5.7,0,0,-15.5,-17.7,-24.02,15.9,3OA_ZM1_CDebussy-Wrzosy.render_stats.html
+2021-03-27_aula-pg_solo-piano,3OA_ZM1_EGrieg-LetniWieczor.wav,2:58.986,178.986,,-2.0,-2.0,0,0,-9.8,-14.2,-24.01,17.6,3OA_ZM1_EGrieg-LetniWieczor.render_stats.html
+2021-03-27_aula-pg_solo-piano,3OA_ZM1_ORespighi-Notturno.wav,6:30.000,390.0,,-0.8,-0.8,0,0,-10.1,-13.5,-21.92,19.2,3OA_ZM1_ORespighi-Notturno.render_stats.html
+2021-03-27_aula-pg_solo-piano,3OA_ZM1_PGrainger-BridalLullaby.wav,3:12.000,192.0,,-7.3,-7.3,0,0,-16.8,-19.2,-25.3,12.2,3OA_ZM1_PGrainger-BridalLullaby.render_stats.html
+2021-06-27_aula-pg_choir,1OA_NTSF1_IDenisova-CherubicHymn.wav,4:03.000,243.0,2.4,-3.7,-3.7,0,0,-12.9,-14.6,-24.13,20.3,1OA_NTSF1_IDenisova-CherubicHymn.render_stats.html
+2021-06-27_aula-pg_choir,1OA_NTSF1_JJunek-BogoroditseDevo.wav,3:31.500,211.5,2.4,-2.3,-2.3,0,0,-10.1,-11.6,-19.51,18.1,1OA_NTSF1_JJunek-BogoroditseDevo.render_stats.html
+2021-06-27_aula-pg_choir,1OA_NTSF1_JMaklakiewicz-Kołysanka.wav,2:34.500,154.5,2.4,-2.8,-2.8,0,0,-10.7,-14.4,-23.18,19.7,1OA_NTSF1_JMaklakiewicz-Kołysanka.render_stats.html
+2021-06-27_aula-pg_choir,1OA_NTSF1_MRaczynski-LaudateDominum.wav,3:12.000,192.0,2.4,-0.5,-0.5,0,0,-7.3,-8.4,-18.92,18.7,1OA_NTSF1_MRaczynski-LaudateDominum.render_stats.html
+2021-06-27_aula-pg_choir,1OA_NTSF1_VMiskinis-OSalutarisHostia.wav,3:19.000,199.0,2.4,-0.7,-0.7,0,0,-9.3,-11.0,-18.78,20.5,1OA_NTSF1_VMiskinis-OSalutarisHostia.render_stats.html
+2021-06-27_aula-pg_choir,3OA_ZM1_IDenisova-CherubicHymn.wav,4:03.000,243.0,0.7,-5.1,-5.1,0,0,-12.6,-14.2,-24.75,16.6,3OA_ZM1_IDenisova-CherubicHymn.render_stats.html
+2021-06-27_aula-pg_choir,3OA_ZM1_JJunek-BogoroditseDevo.wav,3:31.500,211.5,0.7,-2.2,-2.2,0,0,-9.0,-9.6,-19.14,17.7,3OA_ZM1_JJunek-BogoroditseDevo.render_stats.html
+2021-06-27_aula-pg_choir,3OA_ZM1_JMaklakiewicz-Kołysanka.wav,2:34.500,154.5,0.7,-5.0,-5.0,0,0,-11.0,-14.5,-23.75,18.4,3OA_ZM1_JMaklakiewicz-Kołysanka.render_stats.html
+2021-06-27_aula-pg_choir,3OA_ZM1_MRaczynski-LaudateDominum.wav,3:12.000,192.0,0.7,-0.5,-0.5,0,0,-6.0,-6.9,-18.12,17.9,3OA_ZM1_MRaczynski-LaudateDominum.render_stats.html
+2021-06-27_aula-pg_choir,3OA_ZM1_VMiskinis-OSalutarisHostia.wav,3:19.000,199.0,0.7,-3.1,-3.1,0,0,-8.8,-9.8,-18.2,21.1,3OA_ZM1_VMiskinis-OSalutarisHostia.render_stats.html
+2022-03-10_gut-lobby_choir-orchestra,3OA_ZM1_JubileeConcertPt1.wav,28:20.500,1700.5,,-7.1,-7.1,0,0,-14.6,-15.9,-27.28,22.8,3OA_ZM1_JubileeConcertPt1.render_stats.html
+2022-03-10_gut-lobby_choir-orchestra,3OA_ZM1_JubileeConcertPt2.wav,39:10.000,2350.0,,-0.5,-0.5,0,0,-9.0,-13.0,-23.83,18.3,3OA_ZM1_JubileeConcertPt2.render_stats.html
+2022-03-25_sopot-pier_outdoor-ambient,3OA_ZM1_SopotPier.wav,11:25.000,685.0,,-0.5,-0.5,0,0,-22.7,-26.6,-35.0,12.2,3OA_ZM1_SopotPier.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_FChopin-Revolutionary.wav,2:30.000,150.0,,-2.9,-2.9,0,0,-13.2,-15.7,-19.28,10.2,3OA_ZM1_FChopin-Revolutionary.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_JHaydn-Sonata1.wav,6:59.000,419.0,,-7.5,-7.5,0,0,-17.5,-20.1,-27.29,17.1,3OA_ZM1_JHaydn-Sonata1.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_JHaydn-Sonata2.wav,6:59.000,419.0,,-0.5,-0.5,0,0,-12.3,-15.4,-20.23,10.7,3OA_ZM1_JHaydn-Sonata2.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_JHaydn-Sonata3.wav,4:17.000,257.0,,-6.9,-6.9,0,0,-17.0,-18.7,-24.23,10.4,3OA_ZM1_JHaydn-Sonata3.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_JSBach-PreludeFuge1.wav,13:28.000,808.0,,-8.1,-8.1,0,0,-18.8,-20.4,-27.38,14.6,3OA_ZM1_JSBach-PreludeFuge1.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_JSBach-PreludeFuge2.wav,4:19.000,259.0,,-9.1,-9.1,0,0,-19.7,-21.7,-27.72,14.0,3OA_ZM1_JSBach-PreludeFuge2.render_stats.html
+2022-04-13_aula-pg_solo-piano,3OA_ZM1_MRavel-Valse.wav,13:04.000,784.0,,-1.1,-1.1,0,0,-10.2,-13.0,-20.36,15.6,3OA_ZM1_MRavel-Valse.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert01.wav,7:30.000,450.0,,-0.5,-0.5,0,0,-7.0,-8.7,-16.26,16.0,3OA_ZM1_CharityConcert01.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert02.wav,5:48.000,348.0,,-0.5,-0.5,0,0,-9.3,-11.0,-17.56,11.9,3OA_ZM1_CharityConcert02.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert03.wav,5:48.000,348.0,,-0.5,-0.5,0,0,-9.6,-10.9,-20.01,22.2,3OA_ZM1_CharityConcert03.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert04.wav,5:20.000,320.0,,-0.5,-0.5,0,0,-7.2,-9.5,-17.76,19.5,3OA_ZM1_CharityConcert04.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert05.wav,13:36.000,816.0,,-0.5,-0.5,0,0,-7.7,-8.9,-19.21,17.6,3OA_ZM1_CharityConcert05.render_stats.html
+2022-04-21_aula-pg_choir-soloists,3OA_ZM1_CharityConcert06.wav,7:36.000,456.0,,-0.5,-0.5,0,0,-9.3,-11.5,-15.34,22.7,3OA_ZM1_CharityConcert06.render_stats.html
+2022-06-27_aula-pg_solo-piano,3OA_ZM1_FChopin-Revolutionary.wav,2:42.000,162.0,,-0.5,-0.5,0,0,-10.9,-13.8,-17.66,12.8,3OA_ZM1_FChopin-Revolutionary.render_stats.html
+2022-06-27_aula-pg_solo-piano,3OA_ZM1_FLiszt-PaganiniVariations.wav,5:30.000,330.0,,-1.2,-1.2,0,0,-8.2,-11.1,-16.96,14.4,3OA_ZM1_FLiszt-PaganiniVariations.render_stats.html
+2022-06-27_aula-pg_solo-piano,3OA_ZM1_JSBach-PreludeFugeC.wav,4:14.000,254.0,,-8.4,-8.4,0,0,-18.3,-19.7,-26.44,14.2,3OA_ZM1_JSBach-PreludeFugeC.render_stats.html
+2022-06-27_aula-pg_solo-piano,3OA_ZM1_LvBeethoven-Sonata.wav,20:26.000,1226.0,,-1.8,-1.8,0,0,-10.5,-13.2,-21.64,17.8,3OA_ZM1_LvBeethoven-Sonata.render_stats.html
+2022-06-27_aula-pg_solo-piano,3OA_ZM1_SRachmaninov-Prelude.wav,5:58.000,358.0,,-1.9,-1.9,0,0,-12.3,-14.4,-21.14,23.2,3OA_ZM1_SRachmaninov-Prelude.render_stats.html
+2023-02-21_gut-lobby_choir-jazz-band,3OA_ZM1_Concert.wav,1:26:36.783,5196.783,,-0.5,-0.5,0,0,-11.2,-12.4,-21.43,19.6,3OA_ZM1_Concert.render_stats.html
+2023-06-03_aula-pg_choir-contemporary,1OA_NTSF1_JNeske-DeusExMachina.wav,4:20.000,260.0,-0.2,-0.5,-0.5,0,0,-8.3,-9.5,-18.18,19.8,1OA_NTSF1_JNeske-DeusExMachina.render_stats.html
+2023-06-03_aula-pg_choir-contemporary,3OA_ZM1_JNeske-DeusExMachina.wav,4:20.000,260.0,1.9,-0.5,-0.5,0,0,-7.7,-8.7,-17.27,17.8,3OA_ZM1_JNeske-DeusExMachina.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_CDebussy-Canope.wav,3:45.184,225.184,,-15.8,-15.8,0,0,-26.1,-29.8,-35.31,16.5,3OA_ZM1_CDebussy-Canope.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_CDebussy-Feux.wav,4:47.181,287.181,,-0.5,-0.5,0,0,-9.8,-14.2,-20.36,20.9,3OA_ZM1_CDebussy-Feux.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_JHisaishi-AshitakaAndSan.wav,5:02.000,302.0,,-7.4,-7.4,0,0,-18.1,-22.2,-28.12,16.9,3OA_ZM1_JHisaishi-AshitakaAndSan.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_JHisaishi-OneSummersDay.wav,4:38.603,278.603,,-9.3,-9.3,0,0,-18.5,-21.7,-29.0,17.7,3OA_ZM1_JHisaishi-OneSummersDay.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_LGodowski-SuitaJawajska6.wav,3:55.500,235.5,,-0.5,-0.5,0,0,-11.2,-13.8,-18.36,14.4,3OA_ZM1_LGodowski-SuitaJawajska6.render_stats.html
+2023-08-04_aula-pg_solo-piano,3OA_ZM1_MRavel-Miroirs.wav,3:46.500,226.5,,-5.4,-5.4,0,0,-15.7,-17.6,-25.38,13.3,3OA_ZM1_MRavel-Miroirs.render_stats.html
+2023-10-12_baltic-philharmonic_choir,3OA_ZM1_ChoirConcertPt1.wav,32:52.000,1972.0,,-0.5,-0.5,0,0,-15.0,-18.0,-24.4,21.4,3OA_ZM1_ChoirConcertPt1.render_stats.html
+2023-10-12_baltic-philharmonic_choir,3OA_ZM1_ChoirConcertPt2.wav,41:30.346,2490.346,,-1.6,-1.6,0,0,-14.6,-16.4,-25.1,18.9,3OA_ZM1_ChoirConcertPt2.render_stats.html
+2023-12-07_aula-pg_chamber-ensemble,3OA_ZM1_band.wav,8:17.665,497.665,,-0.5,-0.5,0,0,-7.7,-9.7,-16.08,11.4,3OA_ZM1_band.render_stats.html
+2024-03-07_aula-pg_piano-duet,3OA_ZM1b_PARTYcz1.wav,3:53.000,233.0,,-7.2,-7.2,0,0,-19.4,-22.9,-28.4,13.3,3OA_ZM1b_PARTYcz1.render_stats.html
+2024-03-07_aula-pg_piano-duet,3OA_ZM1b_PARTYcz2.wav,5:48.500,348.5,,-8.5,-8.5,0,0,-19.8,-22.4,-28.58,15.4,3OA_ZM1b_PARTYcz2.render_stats.html
+2024-03-07_aula-pg_piano-duet,3OA_ZM1b_PARTYcz3.wav,4:13.500,253.5,,-10.2,-10.2,0,0,-19.2,-22.6,-27.63,8.5,3OA_ZM1b_PARTYcz3.render_stats.html
+2024-03-07_aula-pg_piano-duet,3OA_ZM1b_PARTYcz4.wav,3:59.000,239.0,,-9.6,-9.6,0,0,-19.9,-21.6,-28.33,14.5,3OA_ZM1b_PARTYcz4.render_stats.html
+2024-03-09_fiqu-miqu-studio_folk-band,3OA_ZM1_EmigrahGra.wav,4:40.500,280.5,,-0.5,-0.5,0,0,-8.4,-11.7,-15.9,7.0,3OA_ZM1_EmigrahGra.render_stats.html
+2024-03-09_fiqu-miqu-studio_folk-band,3OA_ZM1_Widno.wav,14:29.500,869.5,,-0.5,-0.5,0,0,-10.6,-15.9,-21.96,14.3,3OA_ZM1_Widno.render_stats.html
+2024-04-30_aula-pg_solo-piano,3OA_ZM1_AGinastera-Sonata1.wav,15:21.500,921.5,,-0.5,-0.5,0,0,-9.4,-11.5,-18.16,21.8,3OA_ZM1_AGinastera-Sonata1.render_stats.html
+2024-04-30_aula-pg_solo-piano,5OA_Spcmic_AGinastera-Sonata1.wav,15:21.500,921.5,21.2,-0.5,-0.5,0,0,-7.0,-9.0,-15.84,21.0,5OA_Spcmic_AGinastera-Sonata1.render_stats.html
+2024-07-27_piechcin-quarry_vr-production-outdoor,3OA_ZM1_scena1.wav,3:15.000,195.0,,-0.5,-0.5,0,0,-7.2,-12.2,-18.8,18.0,3OA_ZM1_scena1.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,1OA_SRVRMIC_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,-0.5,-2.5,-2.5,0,0,-12.1,-13.4,-21.85,17.2,1OA_SRVRMIC_CFranck-PreludeChoralFugue.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,1OA_SRVRMIC_SProkofiev-Sonata4.wav,16:24.000,984.0,-0.5,-0.5,-0.5,0,0,-10.1,-13.3,-20.97,19.4,1OA_SRVRMIC_SProkofiev-Sonata4.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,3OA_Spcmic_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,12.0,-3.3,-3.3,0,0,-8.4,-9.3,-18.19,17.1,3OA_Spcmic_CFranck-PreludeChoralFugue.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,3OA_Spcmic_SProkofiev-Sonata4.wav,16:24.000,984.0,12.0,-0.5,-0.5,0,0,-6.6,-9.4,-17.29,19.0,3OA_Spcmic_SProkofiev-Sonata4.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,3OA_ZM1_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,-0.5,-0.8,-0.8,0,0,-10.7,-12.2,-21.48,16.7,3OA_ZM1_CFranck-PreludeChoralFugue.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,3OA_ZM1_SProkofiev-Sonata4.wav,16:24.000,984.0,-0.5,-0.5,-0.5,0,0,-11.0,-12.8,-20.62,18.7,3OA_ZM1_SProkofiev-Sonata4.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,5OA_Spcmic_CFranck-PreludeChoralFugue.wav,19:07.833,1147.833,12.0,-3.3,-3.3,0,0,-9.9,-11.4,-20.35,17.1,5OA_Spcmic_CFranck-PreludeChoralFugue.render_stats.html
+2024-08-15_aula-pg_solo-piano-mic-comparison,5OA_Spcmic_SProkofiev-Sonata4.wav,16:24.000,984.0,12.0,-0.5,-0.5,0,0,-8.8,-11.8,-19.62,19.4,5OA_Spcmic_SProkofiev-Sonata4.render_stats.html
+2024-12-10_aula-pg_solo-piano-chopin,1OA_NTSF1_ChopinRecital.wav,24:48.283,1488.283,1.7,-0.5,-0.5,0,0,-9.0,-10.9,-17.03,20.9,1OA_NTSF1_ChopinRecital.render_stats.html
+2024-12-10_aula-pg_solo-piano-chopin,3OA_ZM1_ChopinRecital1.wav,24:48.283,1488.283,,-0.5,-0.5,0,0,-8.9,-12.5,-19.83,21.2,3OA_ZM1_ChopinRecital1.render_stats.html
+2025-01-10_amuz_solo-piano-chopin,3OA_ZM1_ChopinRecital2.wav,15:12.000,912.0,,-0.5,-0.5,0,0,-10.8,-13.4,-21.54,18.7,3OA_ZM1_ChopinRecital2.render_stats.html
+2025-02-05_aula-pg_violin-piano-duo,1OA_NTSF1_CFranck-Sonata.wav,15:42.000,942.0,,-3.4,-3.4,0,0,-12.0,-14.9,-21.52,17.4,1OA_NTSF1_CFranck-Sonata.render_stats.html
+2025-02-05_aula-pg_violin-piano-duo,3OA_ZM1_CFranck-Sonata.wav,15:42.000,942.0,,-0.5,-0.5,0,0,-9.2,-11.6,-18.64,17.1,3OA_ZM1_CFranck-Sonata.render_stats.html
+2025-09-28_jedrzejewo-cave_vr-production-indoor,3OA_Spcmic_cave.wav,2:15.446,135.446,-0.5,-0.5,-0.5,0,0,-9.6,-14.4,-22.45,22.7,3OA_Spcmic_cave.render_stats.html
+2025-09-28_jedrzejewo-cave_vr-production-indoor,5OA_Spcmic_cave.wav,2:15.446,135.446,1.7,-0.5,-0.5,0,0,-13.4,-17.7,-25.22,23.4,5OA_Spcmic_cave.render_stats.html
+2026-01-18_oliwa-cathedral_choir-christmas,3OA_Spcmic_ChristmasCarolsConcert.wav,49:59.000,2999.0,-0.5,-0.5,-0.5,0,0,-12.4,-16.2,-25.96,16.8,3OA_Spcmic_ChristmasCarolsConcert.render_stats.html
+2026-01-18_oliwa-cathedral_choir-christmas,5OA_Spcmic_ChristmasCarolsConcert.wav,49:59.000,2999.0,9.4,-0.5,-0.5,0,0,-15.2,-19.2,-28.72,17.6,5OA_Spcmic_ChristmasCarolsConcert.render_stats.html

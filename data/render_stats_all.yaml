@@ -1,0 +1,396 @@
+generated: '2026-09-06T17:19:54.583430'
+sessions:
+  2019-04-12_holy-trinity-church_choir-organ-strings:
+  - duration: '1:19:32.517'
+    filename: 3OA_ZM1_PassionConcert.wav
+    lra: 22.0
+    lufs_i: -20.75
+    true_peak_db: -0.5
+  2021-03-27_aula-pg_solo-piano:
+  - duration: '3:36.000'
+    filename: 3OA_ZM1_CDebussy-Wrzosy.wav
+    lra: 15.9
+    lufs_i: -24.02
+    true_peak_db: -5.7
+  - duration: '2:58.986'
+    filename: 3OA_ZM1_EGrieg-LetniWieczor.wav
+    lra: 17.6
+    lufs_i: -24.01
+    true_peak_db: -2.0
+  - duration: '6:30.000'
+    filename: 3OA_ZM1_ORespighi-Notturno.wav
+    lra: 19.2
+    lufs_i: -21.92
+    true_peak_db: -0.8
+  - duration: '3:12.000'
+    filename: 3OA_ZM1_PGrainger-BridalLullaby.wav
+    lra: 12.2
+    lufs_i: -25.3
+    true_peak_db: -7.3
+  2021-06-27_aula-pg_choir:
+  - duration: '4:03.000'
+    filename: 1OA_NTSF1_IDenisova-CherubicHymn.wav
+    lra: 20.3
+    lufs_i: -24.13
+    true_peak_db: -3.7
+  - duration: '3:31.500'
+    filename: 1OA_NTSF1_JJunek-BogoroditseDevo.wav
+    lra: 18.1
+    lufs_i: -19.51
+    true_peak_db: -2.3
+  - duration: '2:34.500'
+    filename: 1OA_NTSF1_JMaklakiewicz-Kołysanka.wav
+    lra: 19.7
+    lufs_i: -23.18
+    true_peak_db: -2.8
+  - duration: '3:12.000'
+    filename: 1OA_NTSF1_MRaczynski-LaudateDominum.wav
+    lra: 18.7
+    lufs_i: -18.92
+    true_peak_db: -0.5
+  - duration: '3:19.000'
+    filename: 1OA_NTSF1_VMiskinis-OSalutarisHostia.wav
+    lra: 20.5
+    lufs_i: -18.78
+    true_peak_db: -0.7
+  - duration: '4:03.000'
+    filename: 3OA_ZM1_IDenisova-CherubicHymn.wav
+    lra: 16.6
+    lufs_i: -24.75
+    true_peak_db: -5.1
+  - duration: '3:31.500'
+    filename: 3OA_ZM1_JJunek-BogoroditseDevo.wav
+    lra: 17.7
+    lufs_i: -19.14
+    true_peak_db: -2.2
+  - duration: '2:34.500'
+    filename: 3OA_ZM1_JMaklakiewicz-Kołysanka.wav
+    lra: 18.4
+    lufs_i: -23.75
+    true_peak_db: -5.0
+  - duration: '3:12.000'
+    filename: 3OA_ZM1_MRaczynski-LaudateDominum.wav
+    lra: 17.9
+    lufs_i: -18.12
+    true_peak_db: -0.5
+  - duration: '3:19.000'
+    filename: 3OA_ZM1_VMiskinis-OSalutarisHostia.wav
+    lra: 21.1
+    lufs_i: -18.2
+    true_peak_db: -3.1
+  2022-03-10_gut-lobby_choir-orchestra:
+  - duration: '28:20.500'
+    filename: 3OA_ZM1_JubileeConcertPt1.wav
+    lra: 22.8
+    lufs_i: -27.28
+    true_peak_db: -7.1
+  - duration: '39:10.000'
+    filename: 3OA_ZM1_JubileeConcertPt2.wav
+    lra: 18.3
+    lufs_i: -23.83
+    true_peak_db: -0.5
+  2022-03-25_sopot-pier_outdoor-ambient:
+  - duration: '11:25.000'
+    filename: 3OA_ZM1_SopotPier.wav
+    lra: 12.2
+    lufs_i: -35.0
+    true_peak_db: -0.5
+  2022-04-13_aula-pg_solo-piano:
+  - duration: '2:30.000'
+    filename: 3OA_ZM1_FChopin-Revolutionary.wav
+    lra: 10.2
+    lufs_i: -19.28
+    true_peak_db: -2.9
+  - duration: '6:59.000'
+    filename: 3OA_ZM1_JHaydn-Sonata1.wav
+    lra: 17.1
+    lufs_i: -27.29
+    true_peak_db: -7.5
+  - duration: '6:59.000'
+    filename: 3OA_ZM1_JHaydn-Sonata2.wav
+    lra: 10.7
+    lufs_i: -20.23
+    true_peak_db: -0.5
+  - duration: '4:17.000'
+    filename: 3OA_ZM1_JHaydn-Sonata3.wav
+    lra: 10.4
+    lufs_i: -24.23
+    true_peak_db: -6.9
+  - duration: '13:28.000'
+    filename: 3OA_ZM1_JSBach-PreludeFuge1.wav
+    lra: 14.6
+    lufs_i: -27.38
+    true_peak_db: -8.1
+  - duration: '4:19.000'
+    filename: 3OA_ZM1_JSBach-PreludeFuge2.wav
+    lra: 14.0
+    lufs_i: -27.72
+    true_peak_db: -9.1
+  - duration: '13:04.000'
+    filename: 3OA_ZM1_MRavel-Valse.wav
+    lra: 15.6
+    lufs_i: -20.36
+    true_peak_db: -1.1
+  2022-04-21_aula-pg_choir-soloists:
+  - duration: '7:30.000'
+    filename: 3OA_ZM1_CharityConcert01.wav
+    lra: 16.0
+    lufs_i: -16.26
+    true_peak_db: -0.5
+  - duration: '5:48.000'
+    filename: 3OA_ZM1_CharityConcert02.wav
+    lra: 11.9
+    lufs_i: -17.56
+    true_peak_db: -0.5
+  - duration: '5:48.000'
+    filename: 3OA_ZM1_CharityConcert03.wav
+    lra: 22.2
+    lufs_i: -20.01
+    true_peak_db: -0.5
+  - duration: '5:20.000'
+    filename: 3OA_ZM1_CharityConcert04.wav
+    lra: 19.5
+    lufs_i: -17.76
+    true_peak_db: -0.5
+  - duration: '13:36.000'
+    filename: 3OA_ZM1_CharityConcert05.wav
+    lra: 17.6
+    lufs_i: -19.21
+    true_peak_db: -0.5
+  - duration: '7:36.000'
+    filename: 3OA_ZM1_CharityConcert06.wav
+    lra: 22.7
+    lufs_i: -15.34
+    true_peak_db: -0.5
+  2022-06-27_aula-pg_solo-piano:
+  - duration: '2:42.000'
+    filename: 3OA_ZM1_FChopin-Revolutionary.wav
+    lra: 12.8
+    lufs_i: -17.66
+    true_peak_db: -0.5
+  - duration: '5:30.000'
+    filename: 3OA_ZM1_FLiszt-PaganiniVariations.wav
+    lra: 14.4
+    lufs_i: -16.96
+    true_peak_db: -1.2
+  - duration: '4:14.000'
+    filename: 3OA_ZM1_JSBach-PreludeFugeC.wav
+    lra: 14.2
+    lufs_i: -26.44
+    true_peak_db: -8.4
+  - duration: '20:26.000'
+    filename: 3OA_ZM1_LvBeethoven-Sonata.wav
+    lra: 17.8
+    lufs_i: -21.64
+    true_peak_db: -1.8
+  - duration: '5:58.000'
+    filename: 3OA_ZM1_SRachmaninov-Prelude.wav
+    lra: 23.2
+    lufs_i: -21.14
+    true_peak_db: -1.9
+  2023-02-21_gut-lobby_choir-jazz-band:
+  - duration: '1:26:36.783'
+    filename: 3OA_ZM1_Concert.wav
+    lra: 19.6
+    lufs_i: -21.43
+    true_peak_db: -0.5
+  2023-06-03_aula-pg_choir-contemporary:
+  - duration: '4:20.000'
+    filename: 1OA_NTSF1_JNeske-DeusExMachina.wav
+    lra: 19.8
+    lufs_i: -18.18
+    true_peak_db: -0.5
+  - duration: '4:20.000'
+    filename: 3OA_ZM1_JNeske-DeusExMachina.wav
+    lra: 17.8
+    lufs_i: -17.27
+    true_peak_db: -0.5
+  2023-08-04_aula-pg_solo-piano:
+  - duration: '3:45.184'
+    filename: 3OA_ZM1_CDebussy-Canope.wav
+    lra: 16.5
+    lufs_i: -35.31
+    true_peak_db: -15.8
+  - duration: '4:47.181'
+    filename: 3OA_ZM1_CDebussy-Feux.wav
+    lra: 20.9
+    lufs_i: -20.36
+    true_peak_db: -0.5
+  - duration: '5:02.000'
+    filename: 3OA_ZM1_JHisaishi-AshitakaAndSan.wav
+    lra: 16.9
+    lufs_i: -28.12
+    true_peak_db: -7.4
+  - duration: '4:38.603'
+    filename: 3OA_ZM1_JHisaishi-OneSummersDay.wav
+    lra: 17.7
+    lufs_i: -29.0
+    true_peak_db: -9.3
+  - duration: '3:55.500'
+    filename: 3OA_ZM1_LGodowski-SuitaJawajska6.wav
+    lra: 14.4
+    lufs_i: -18.36
+    true_peak_db: -0.5
+  - duration: '3:46.500'
+    filename: 3OA_ZM1_MRavel-Miroirs.wav
+    lra: 13.3
+    lufs_i: -25.38
+    true_peak_db: -5.4
+  2023-10-12_baltic-philharmonic_choir:
+  - duration: '32:52.000'
+    filename: 3OA_ZM1_ChoirConcertPt1.wav
+    lra: 21.4
+    lufs_i: -24.4
+    true_peak_db: -0.5
+  - duration: '41:30.346'
+    filename: 3OA_ZM1_ChoirConcertPt2.wav
+    lra: 18.9
+    lufs_i: -25.1
+    true_peak_db: -1.6
+  2023-12-07_aula-pg_chamber-ensemble:
+  - duration: '8:17.665'
+    filename: 3OA_ZM1_band.wav
+    lra: 11.4
+    lufs_i: -16.08
+    true_peak_db: -0.5
+  2024-03-07_aula-pg_piano-duet:
+  - duration: '3:53.000'
+    filename: 3OA_ZM1b_PARTYcz1.wav
+    lra: 13.3
+    lufs_i: -28.4
+    true_peak_db: -7.2
+  - duration: '5:48.500'
+    filename: 3OA_ZM1b_PARTYcz2.wav
+    lra: 15.4
+    lufs_i: -28.58
+    true_peak_db: -8.5
+  - duration: '4:13.500'
+    filename: 3OA_ZM1b_PARTYcz3.wav
+    lra: 8.5
+    lufs_i: -27.63
+    true_peak_db: -10.2
+  - duration: '3:59.000'
+    filename: 3OA_ZM1b_PARTYcz4.wav
+    lra: 14.5
+    lufs_i: -28.33
+    true_peak_db: -9.6
+  2024-03-09_fiqu-miqu-studio_folk-band:
+  - duration: '4:40.500'
+    filename: 3OA_ZM1_EmigrahGra.wav
+    lra: 7.0
+    lufs_i: -15.9
+    true_peak_db: -0.5
+  - duration: '14:29.500'
+    filename: 3OA_ZM1_Widno.wav
+    lra: 14.3
+    lufs_i: -21.96
+    true_peak_db: -0.5
+  2024-04-30_aula-pg_solo-piano:
+  - duration: '15:21.500'
+    filename: 3OA_ZM1_AGinastera-Sonata1.wav
+    lra: 21.8
+    lufs_i: -18.16
+    true_peak_db: -0.5
+  - duration: '15:21.500'
+    filename: 5OA_Spcmic_AGinastera-Sonata1.wav
+    lra: 21.0
+    lufs_i: -15.84
+    true_peak_db: -0.5
+  2024-07-27_piechcin-quarry_vr-production-outdoor:
+  - duration: '3:15.000'
+    filename: 3OA_ZM1_scena1.wav
+    lra: 18.0
+    lufs_i: -18.8
+    true_peak_db: -0.5
+  2024-08-15_aula-pg_solo-piano-mic-comparison:
+  - duration: '19:07.833'
+    filename: 1OA_SRVRMIC_CFranck-PreludeChoralFugue.wav
+    lra: 17.2
+    lufs_i: -21.85
+    true_peak_db: -2.5
+  - duration: '16:24.000'
+    filename: 1OA_SRVRMIC_SProkofiev-Sonata4.wav
+    lra: 19.4
+    lufs_i: -20.97
+    true_peak_db: -0.5
+  - duration: '19:07.833'
+    filename: 3OA_Spcmic_CFranck-PreludeChoralFugue.wav
+    lra: 17.1
+    lufs_i: -18.19
+    true_peak_db: -3.3
+  - duration: '16:24.000'
+    filename: 3OA_Spcmic_SProkofiev-Sonata4.wav
+    lra: 19.0
+    lufs_i: -17.29
+    true_peak_db: -0.5
+  - duration: '19:07.833'
+    filename: 3OA_ZM1_CFranck-PreludeChoralFugue.wav
+    lra: 16.7
+    lufs_i: -21.48
+    true_peak_db: -0.8
+  - duration: '16:24.000'
+    filename: 3OA_ZM1_SProkofiev-Sonata4.wav
+    lra: 18.7
+    lufs_i: -20.62
+    true_peak_db: -0.5
+  - duration: '19:07.833'
+    filename: 5OA_Spcmic_CFranck-PreludeChoralFugue.wav
+    lra: 17.1
+    lufs_i: -20.35
+    true_peak_db: -3.3
+  - duration: '16:24.000'
+    filename: 5OA_Spcmic_SProkofiev-Sonata4.wav
+    lra: 19.4
+    lufs_i: -19.62
+    true_peak_db: -0.5
+  2024-12-10_aula-pg_solo-piano-chopin:
+  - duration: '24:48.283'
+    filename: 1OA_NTSF1_ChopinRecital.wav
+    lra: 20.9
+    lufs_i: -17.03
+    true_peak_db: -0.5
+  - duration: '24:48.283'
+    filename: 3OA_ZM1_ChopinRecital1.wav
+    lra: 21.2
+    lufs_i: -19.83
+    true_peak_db: -0.5
+  2025-01-10_amuz_solo-piano-chopin:
+  - duration: '15:12.000'
+    filename: 3OA_ZM1_ChopinRecital2.wav
+    lra: 18.7
+    lufs_i: -21.54
+    true_peak_db: -0.5
+  2025-02-05_aula-pg_violin-piano-duo:
+  - duration: '15:42.000'
+    filename: 1OA_NTSF1_CFranck-Sonata.wav
+    lra: 17.4
+    lufs_i: -21.52
+    true_peak_db: -3.4
+  - duration: '15:42.000'
+    filename: 3OA_ZM1_CFranck-Sonata.wav
+    lra: 17.1
+    lufs_i: -18.64
+    true_peak_db: -0.5
+  2025-09-28_jedrzejewo-cave_vr-production-indoor:
+  - duration: '2:15.446'
+    filename: 3OA_Spcmic_cave.wav
+    lra: 22.7
+    lufs_i: -22.45
+    true_peak_db: -0.5
+  - duration: '2:15.446'
+    filename: 5OA_Spcmic_cave.wav
+    lra: 23.4
+    lufs_i: -25.22
+    true_peak_db: -0.5
+  2026-01-18_oliwa-cathedral_choir-christmas:
+  - duration: '49:59.000'
+    filename: 3OA_Spcmic_ChristmasCarolsConcert.wav
+    lra: 16.8
+    lufs_i: -25.96
+    true_peak_db: -0.5
+  - duration: '49:59.000'
+    filename: 5OA_Spcmic_ChristmasCarolsConcert.wav
+    lra: 17.6
+    lufs_i: -28.72
+    true_peak_db: -0.5
+total_files: 74

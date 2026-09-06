@@ -9,10 +9,10 @@ Output: figures/  (override with the IEEE_FIG_DIR environment variable)
 
 Figures produced:
   pub_fig03  RT60 octave bands          (CSV)
-  pub_fig04  Geographic map full + detail (metadata YAML + contextily)
+  pub_fig04  Geographic map full + detail (CSV + contextily/geopandas, network for tiles)
   pub_fig05  Recording timeline          (CSV)
-  pub_fig06  LUFS corpus histogram       (CSV, 2023-06-17 excluded)
-  pub_fig07  Spectral comparison         (audio - drive must be mounted)
+  pub_fig06  LUFS corpus histogram       (CSV)
+  pub_fig07  Spectral comparison         (audio: set HOA_CORPUS_DIR, skipped otherwise)
   pub_fig08  LUFS mic comparison         (CSV)
   pub_fig09  Spatial energy per order    (CSV)
   pub_fig10  Directional distribution    (CSV)
@@ -25,6 +25,7 @@ Usage:
     python render_ieee_figures.py 06 09 10      # selected figure numbers
 """
 
+import argparse
 import os
 import sys
 import csv
@@ -36,8 +37,6 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.lines import Line2D
 
 warnings.filterwarnings('ignore')
 
@@ -152,7 +151,7 @@ def render_fig04():
     except ImportError:
         print("  Skipping: needs the optional map extras")
         print("    pip install contextily geopandas")
-        print(f"  The published renders are committed under figures/")
+        print("  The published renders are committed under figures/")
         return
 
     sys.path.insert(0, str(Path(__file__).parent))
@@ -242,7 +241,7 @@ def render_fig05():
 
 
 # ---------------------------------------------------------------------------
-# Figure 6 - LUFS corpus histogram  (2023-06-17 excluded)
+# Figure 6 - LUFS corpus histogram
 # ---------------------------------------------------------------------------
 def render_fig06():
     print("\n[fig06] LUFS corpus histogram")
@@ -250,8 +249,7 @@ def render_fig06():
     with open(DATA_DIR / "render_stats_all.csv") as f:
         for row in csv.DictReader(f):
             if ('NOT-TO-PUBLISH' in row.get('session', '') or
-                    'NOT-TO-PUBLISH' in row.get('filename', '') or
-                    '2023.06.17' in row.get('session', '')):
+                    'NOT-TO-PUBLISH' in row.get('filename', '')):
                 continue
             try:
                 lufs_values.append(float(row['lufs_i']))
@@ -293,6 +291,10 @@ def render_fig07():
     except ImportError as e:
         print(f"  Skipped: {e}")
         return
+    if MIC_COMPARISON_SESSION is None:
+        print("  Skipped: set HOA_CORPUS_DIR to the corpus audio (download from doi.org/10.34808/w8bx-2094);"
+              " the published render is committed under figures/")
+        return
 
     plot_order  = ["Saramonic (1OA)", "ZM-1 (3OA)", "Spcmic (3OA)", "Spcmic (5OA)"]
     line_styles = {
@@ -303,6 +305,7 @@ def render_fig07():
     }
 
     fig, ax = plt.subplots(figsize=(COL_W, 2.4))
+    n_plotted = 0
     for mic_name in plot_order:
         if mic_name not in MIC_FILES:
             continue
@@ -310,6 +313,7 @@ def render_fig07():
         if not audio_path.exists():
             print(f"  Warning: {audio_path.name} not found - skipping")
             continue
+        n_plotted += 1
         print(f"  Processing {mic_name}...")
         freqs, mag_db = compute_spectral_average(audio_path,
                                                  excerpt_seconds=None,
@@ -321,6 +325,12 @@ def render_fig07():
         ax.semilogx(freqs[mask], mag_db[mask],
                     label=mic_name, color=MIC_COLORS[mic_name],
                     linewidth=sty['lw'], linestyle=sty['ls'], alpha=sty['alpha'])
+
+    if not n_plotted:
+        # nothing to plot: leave the committed figure alone instead of overwriting it with empty axes
+        print(f"  Skipped: no comparison audio under {MIC_COMPARISON_SESSION}")
+        plt.close(fig)
+        return
 
     ax.set_xlim(20, 20000)
     ax.set_ylim(-30, 15)
@@ -543,7 +553,9 @@ FIGURES = {
 
 
 def main():
-    requested = sys.argv[1:] if len(sys.argv) > 1 else sorted(FIGURES)
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("figures", nargs="*", help="figure numbers to render, e.g. 06 09 10 (default: all)")
+    requested = ap.parse_args().figures or sorted(FIGURES)
     unknown = [r for r in requested if r not in FIGURES]
     if unknown:
         print(f"Unknown figure numbers: {unknown}")

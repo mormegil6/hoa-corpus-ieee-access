@@ -1,116 +1,104 @@
 #!/usr/bin/env python3
-"""Calculate corpus statistics from render_stats_all.csv"""
+"""Corpus size, duration and content-type counts from data/render_stats_all.csv.
+
+Durations and file counts per Ambisonics order come from the CSV alone. With
+HOA_CORPUS_DIR set to the deposit root, file sizes are read from
+sessions/<session>/audio/<file> and the content-type table from each session's
+metadata.yaml (content.type); without it, sizes are reported as unavailable and
+the content-type table is skipped.
+"""
+import argparse
 import csv
 import os
+import sys
 from pathlib import Path
+
 import yaml
 
 DATA_DIR = Path(__file__).parent.parent / "data"
-# Audio location: set the HOA_CORPUS_DIR environment variable to the directory
-# holding the corpus session folders (download from doi.org/10.34808/w8bx-2094).
-# The path below is only the original authoring machine's default.
-PNY_DIR = Path(os.environ.get("HOA_CORPUS_DIR", "/Volumes/PNY 1TB/HOA recordings by BM - all"))
+CORPUS_DIR = Path(os.environ["HOA_CORPUS_DIR"]) if os.environ.get("HOA_CORPUS_DIR") else None
+
+# grouping of the manuscript's "Corpus Composition by Content Type" table
+GROUPS = {
+    "Solo piano": ["solo_piano", "piano_duet"],
+    "Choir": ["choir", "choir_with_ensemble", "choir_with_orchestra", "choir_with_soloists", "orchestra"],
+    "Chamber music": ["chamber", "ensemble"],
+    "VR film production": ["vr_film_production"],
+    "Outdoor/Ambient": ["ambient"],
+}
+
+
+def fmt_dur(s):
+    return f"{int(s // 3600)}h {int((s % 3600) // 60)}min"
+
 
 def main():
-    dur_1oa = dur_3oa = dur_5oa = 0
-    count_1oa = count_3oa = count_5oa = 0
-    size_1oa = size_3oa = size_5oa = 0
-    
-    with open(DATA_DIR / "render_stats_all.csv") as f:
-        for row in csv.DictReader(f):
-            fn = row["filename"]
-            dur = float(row["duration_seconds"])
-            session = row["session"]
-            
-            # Get actual file size from disk
-            wav_path = PNY_DIR / session / fn
-            file_size = wav_path.stat().st_size if wav_path.exists() else 0
-            
-            if fn.startswith("1OA"):
-                dur_1oa += dur
-                count_1oa += 1
-                size_1oa += file_size
-            elif fn.startswith("3OA"):
-                dur_3oa += dur
-                count_3oa += 1
-                size_3oa += file_size
-            elif fn.startswith("5OA"):
-                dur_5oa += dur
-                count_5oa += 1
-                size_5oa += file_size
+    rows = list(csv.DictReader(open(DATA_DIR / "render_stats_all.csv")))
+    if CORPUS_DIR is not None and not CORPUS_DIR.is_dir():
+        sys.exit(f"HOA_CORPUS_DIR does not exist: {CORPUS_DIR}")
 
-    def fmt_dur(s):
-        h = int(s // 3600)
-        m = int((s % 3600) // 60)
-        return f"{h}h {m}min"
-    
-    def fmt_gb(b):
-        return f"{b / (1024**3):.1f}"
+    per_order = {}
+    missing = []
+    for row in rows:
+        order = row["filename"][:3]
+        d = per_order.setdefault(order, dict(files=0, seconds=0.0, bytes=0))
+        d["files"] += 1
+        d["seconds"] += float(row["duration_seconds"])
+        if CORPUS_DIR is not None:
+            wav = CORPUS_DIR / "sessions" / row["session"] / "audio" / row["filename"]
+            if wav.exists():
+                d["bytes"] += wav.stat().st_size
+            else:
+                missing.append(wav)
 
     print("=" * 60)
     print("CORPUS STATISTICS FROM render_stats_all.csv")
-    print("(Actual file sizes from PNY drive)")
+    if CORPUS_DIR is None:
+        print("(file sizes not read: HOA_CORPUS_DIR is not set)")
+    elif missing:
+        print(f"(file sizes incomplete: {len(missing)} of {len(rows)} files not found under {CORPUS_DIR})")
+    else:
+        print(f"(file sizes read from {CORPUS_DIR})")
     print("=" * 60)
-    print(f"\n1OA: {count_1oa} files, {fmt_dur(dur_1oa)}, {fmt_gb(size_1oa)} GB")
-    print(f"3OA: {count_3oa} files, {fmt_dur(dur_3oa)}, {fmt_gb(size_3oa)} GB")
-    print(f"5OA: {count_5oa} files, {fmt_dur(dur_5oa)}, {fmt_gb(size_5oa)} GB")
-    
-    total_files = count_1oa + count_3oa + count_5oa
-    total_dur = dur_1oa + dur_3oa + dur_5oa
-    total_size = size_1oa + size_3oa + size_5oa
-    
-    print(f"\nTOTAL: {total_files} files, {fmt_dur(total_dur)}, {fmt_gb(total_size)} GB")
-    print("=" * 60)
-    
-    # Count by content type
-    print("\n" + "=" * 60)
-    print("BY CONTENT TYPE")
-    print("=" * 60)
-    
-    # Load content types from YAML
-    metadata_dir = DATA_DIR / "metadata"
+    for order in sorted(per_order):
+        d = per_order[order]
+        size = f"{d['bytes'] / 1e9:.1f} GB" if CORPUS_DIR is not None and not missing else "size n/a"
+        print(f"{order}: {d['files']} files, {fmt_dur(d['seconds'])}, {size}")
+    total_files = sum(d["files"] for d in per_order.values())
+    total_sec = sum(d["seconds"] for d in per_order.values())
+    total_bytes = sum(d["bytes"] for d in per_order.values())
+    size = f"{total_bytes / 1e9:.1f} GB" if CORPUS_DIR is not None and not missing else "size n/a"
+    print(f"\nTOTAL: {total_files} files, {fmt_dur(total_sec)} ({total_sec / 60:.1f} min), {size}")
+
+    if CORPUS_DIR is None:
+        print("\nContent-type table skipped: HOA_CORPUS_DIR is not set")
+        return
     session_ct = {}
-    for yaml_file in metadata_dir.glob("*.yaml"):
+    for yaml_file in sorted((CORPUS_DIR / "sessions").glob("*/metadata.yaml")):
         with open(yaml_file) as f:
-            data = yaml.safe_load(f)
-        session_ct[yaml_file.stem] = data.get("content_type", "unknown")
-    
-    # Count files by content type
-    ct_files = {}
-    ct_sessions = {}
-    with open(DATA_DIR / "render_stats_all.csv") as f:
-        for row in csv.DictReader(f):
-            session = row["session"]
-            ct = session_ct.get(session, "unknown")
-            ct_files[ct] = ct_files.get(ct, 0) + 1
-            if ct not in ct_sessions:
-                ct_sessions[ct] = set()
-            ct_sessions[ct].add(session)
-    
-    # Group for Table 4
-    groups = {
-        "Solo piano": ["solo_piano", "piano_duet"],
-        "Choir": ["choir", "choir_with_ensemble", "choir_with_orchestra", "choir_with_soloists"],
-        "Chamber music": ["chamber", "ensemble"],
-        "Orchestra": ["orchestra"],
-        "VR film production": ["vr_film_production"],
-        "Outdoor/Ambient": ["ambient"],
-    }
-    
-    print("\nFor Table 4 (Corpus Composition by Content Type):")
+            meta = yaml.safe_load(f) or {}
+        session_ct[yaml_file.parent.name] = (meta.get("content") or {}).get("type", "unknown")
+    ct_files, ct_sessions = {}, {}
+    for row in rows:
+        ct = session_ct.get(row["session"], "unknown")
+        ct_files[ct] = ct_files.get(ct, 0) + 1
+        ct_sessions.setdefault(ct, set()).add(row["session"])
+    print("\nCorpus composition by content type (manuscript table grouping):")
     print("-" * 50)
-    grand_total_files = 0
-    grand_total_sessions = 0
-    for group_name, cts in groups.items():
+    grand_files = grand_sessions = 0
+    for group, cts in GROUPS.items():
         files = sum(ct_files.get(ct, 0) for ct in cts)
-        sessions = set()
-        for ct in cts:
-            sessions.update(ct_sessions.get(ct, set()))
-        print(f"{group_name}: {len(sessions)} sessions, {files} files")
-        grand_total_files += files
-        grand_total_sessions += len(sessions)
+        sessions = set().union(*(ct_sessions.get(ct, set()) for ct in cts))
+        print(f"{group}: {len(sessions)} sessions, {files} files")
+        grand_files += files
+        grand_sessions += len(sessions)
+    ungrouped = sorted(ct for ct in ct_files if not any(ct in cts for cts in GROUPS.values()))
+    if ungrouped:
+        print(f"(content types not in any group: {ungrouped})")
     print("-" * 50)
-    print(f"TOTAL: {grand_total_sessions} sessions, {grand_total_files} files")
+    print(f"TOTAL: {grand_sessions} sessions, {grand_files} files")
+
 
 if __name__ == "__main__":
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
     main()

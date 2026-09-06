@@ -27,17 +27,18 @@ ACOUSTICS_DIR = DATA_DIR / "aula_acoustics"
 OUTPUT_DIR = SCRIPT_DIR / "plots"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-# Recording session with all microphone types
-# Audio location: set the HOA_CORPUS_DIR environment variable to the directory
-# holding the corpus session folders (download from doi.org/10.34808/w8bx-2094).
-# The path below is only the original authoring machine's default.
-CORPUS_ROOT = Path(os.environ.get("HOA_CORPUS_DIR", "/Volumes/PNY 1TB/HOA recordings by BM - all"))
-MIC_COMPARISON_SESSION = CORPUS_ROOT / "2024.08.15 -- ZM1 Spcmic Saramonic" / "render"
+# Audio location: HOA_CORPUS_DIR is the root of the deposit (the directory holding
+# sessions/; download from doi.org/10.34808/w8bx-2094). Only the scripts that open
+# audio need it; both names are None when it is unset.
+CORPUS_ROOT = Path(os.environ["HOA_CORPUS_DIR"]) if os.environ.get("HOA_CORPUS_DIR") else None
+COMPARISON_SESSION = "2024-08-15_aula-pg_solo-piano-mic-comparison"   # session with all microphone types
+MIC_COMPARISON_SESSION = (CORPUS_ROOT / "sessions" / COMPARISON_SESSION / "audio"
+                          if CORPUS_ROOT else None)
 
 # Microphone files for Franck piece (same performance, different mics)
 MIC_FILES = {
     "ZM-1 (3OA)": "3OA_ZM1_CFranck-PreludeChoralFugue.wav",
-    "Spcmic (3OA)": "3OA_Spcmic_CFranck-PreludeChoralFugue.wav", 
+    "Spcmic (3OA)": "3OA_Spcmic_CFranck-PreludeChoralFugue.wav",
     "Spcmic (5OA)": "5OA_Spcmic_CFranck-PreludeChoralFugue.wav",
     "Saramonic (1OA)": "1OA_SRVRMIC_CFranck-PreludeChoralFugue.wav",
 }
@@ -70,7 +71,7 @@ def load_lufs_from_csv():
     if not csv_path.exists():
         print(f"  Warning: {csv_path} not found. Run parse_render_stats.py first.")
         return []
-    
+
     lufs_data = []
     with open(csv_path, 'r') as f:
         reader = csv.DictReader(f)
@@ -92,11 +93,11 @@ def load_lufs_from_csv():
 def extract_lufs_from_metadata(metadata):
     """Extract LUFS values from all metadata files (fallback if CSV not available)."""
     lufs_data = []
-    
+
     for session_name, data in metadata.items():
         if 'rendered_files' not in data:
             continue
-            
+
         for rendered in data.get('rendered_files', []):
             if isinstance(rendered, dict) and 'lufs_i' in rendered:
                 lufs_data.append({
@@ -106,42 +107,42 @@ def extract_lufs_from_metadata(metadata):
                     'channels': rendered.get('channels', 0),
                     'duration': rendered.get('duration_minutes', 0),
                 })
-    
+
     return lufs_data
 
 
 def compute_spectral_average(audio_path, excerpt_seconds=None, smoothing_octave=12):
     """
     Compute smoothed frequency response from audio file.
-    
+
     If excerpt_seconds is None, uses entire file.
     Returns frequencies and magnitude in dB.
     """
     data, sr = sf.read(audio_path)
-    
+
     # Extract W channel (omnidirectional, channel 0 in ACN)
     if data.ndim > 1:
         w_channel = data[:, 0]
     else:
         w_channel = data
-    
+
     # Use excerpt or full duration
     if excerpt_seconds:
         samples = int(excerpt_seconds * sr)
         # Take from middle of the piece for more representative content
         start = (len(w_channel) - samples) // 2
         w_channel = w_channel[start:start + samples]
-    
+
     # Compute FFT with windowing
     n = len(w_channel)
     window = signal.windows.hann(n)
     fft_result = fft(w_channel * window)
     freqs = fftfreq(n, 1/sr)[:n//2]
     magnitude = np.abs(fft_result[:n//2])
-    
+
     # Convert to dB
     magnitude_db = 20 * np.log10(magnitude + 1e-10)
-    
+
     # Apply 1/N octave smoothing using log-spaced moving average
     if smoothing_octave > 0:
         # Convert to log scale for smoothing
@@ -151,23 +152,23 @@ def compute_spectral_average(audio_path, excerpt_seconds=None, smoothing_octave=
         if window_size > 1:
             from scipy.ndimage import uniform_filter1d
             magnitude_db[1:] = uniform_filter1d(magnitude_db[1:], window_size)
-    
+
     return freqs, magnitude_db
 
 
 def compute_spatial_energy_distribution(audio_path):
     """
     Compute energy distribution across ambisonics orders.
-    
+
     Returns energy ratios for each order relative to W channel.
     """
     data, sr = sf.read(audio_path)
-    
+
     if data.ndim == 1:
         return {'0th': 1.0}
-    
+
     n_channels = data.shape[1]
-    
+
     # Determine ambisonics order from channel count
     if n_channels >= 36:
         order = 5
@@ -177,7 +178,7 @@ def compute_spatial_energy_distribution(audio_path):
         order = 1
     else:
         return {'0th': 1.0}
-    
+
     # Channel ranges for each order (ACN ordering)
     order_ranges = {
         0: (0, 1),
@@ -187,7 +188,7 @@ def compute_spatial_energy_distribution(audio_path):
         4: (16, 25),
         5: (25, 36),
     }
-    
+
     # Compute total energy per order
     energies = {}
     for ord_num in range(order + 1):
@@ -195,10 +196,10 @@ def compute_spatial_energy_distribution(audio_path):
         if end <= n_channels:
             order_data = data[:, start:end]
             energies[f"{ord_num}th"] = np.sum(order_data ** 2)
-    
+
     # Normalize to W channel energy
     w_energy = energies.get('0th', 1.0)
     for key in energies:
         energies[key] = 10 * np.log10(energies[key] / w_energy + 1e-10)
-    
+
     return energies

@@ -4,6 +4,13 @@ __pycache__/
 *.pyo
 .venv*/
 venv/
+*.egg-info/
+.ipynb_checkpoints/
 
 # macOS
 .DS_Store
+._*
+
+# Generated in a checkout but not committed
+corpus_scan.csv
+plots/*.png

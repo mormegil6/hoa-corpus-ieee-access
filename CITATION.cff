@@ -11,18 +11,23 @@ authors:
     given-names: "Szymon"
     orcid: "https://orcid.org/0000-0003-0814-1097"
     affiliation: "Gdańsk University of Technology"
-abstract: "Reproducible Python pipeline for the IEEE Access paper \"A Seven-Year Higher-Order Ambisonics Recording Corpus\" - corpus-wide figures (geography, timeline, room acoustics, loudness, session inventory), LaTeX-macro generation for every numeric claim, and the peer-review bootstrap uncertainty analysis for the microphone-comparison results. The recording corpus itself is deposited separately at doi.org/10.34808/w8bx-2094."
+abstract: "Reproducible Python pipeline for the IEEE Access paper \"A Seven-Year Higher-Order Ambisonics Recording Corpus\": corpus-wide figures (geography, timeline, room acoustics, loudness, session inventory), LaTeX-macro generation for every number the pipeline computes, the paired block-bootstrap uncertainty analysis of the microphone-comparison results, an open re-encoding of the deposited ZM-1 capsule signals under six regularization settings, and the dataset card (datasheet, metadata schema, partition table, checksums) of the deposit. The recording corpus itself is deposited separately at doi.org/10.34808/w8bx-2094."
 repository-code: "https://github.com/mormegil6/hoa-corpus-ieee-access"
 url: "https://github.com/mormegil6/hoa-corpus-ieee-access"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21789163
+    description: "Concept DOI; resolves to the latest Zenodo version of this repository"
 license: CC-BY-4.0
-version: 1.0.1
-date-released: 2026-08-04
+version: 1.1.0
+date-released: 2026-09-06
 keywords:
   - ambisonics
   - bootstrap
   - confidence-intervals
   - corpus
   - data-visualization
+  - dataset-card
   - higher-order-ambisonics
   - ieee-access
   - latex

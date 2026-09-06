@@ -4,6 +4,7 @@ scipy>=1.11
 soundfile>=0.12
 matplotlib>=3.7
 pyyaml>=6.0
+jsonschema>=4.0
 
 # Optional, Fig. 4 only: basemap tiles for the geographic map.
 # Without these the other figures still render; Fig. 4 is skipped and the
