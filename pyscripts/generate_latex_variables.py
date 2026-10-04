@@ -280,9 +280,10 @@ def generate_equipment_variables():
     """Generate variables for equipment specifications."""
     variables = {
         'ZMOneCapsules': '19',
-        'ZMOneDiameter': '88',
-        'ZMOneMaxSPL': '120',
-        'ZMOneSelfNoise': '32',
+        'ZMOneDiameter': '103',
+        'ZMOneMaxSPL': '130',
+        'ZMOneSelfNoise': '25',
+        'ZMOneSNR': '69',
         'ZMOneChannels': '20',
         'ZMOneSampleRate': '48',
         'ZMOneBitDepth': '24',

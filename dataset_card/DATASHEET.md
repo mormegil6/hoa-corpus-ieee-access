@@ -172,8 +172,8 @@ The raw A-format captures are archived by the authors for every session and publ
 
 ### 5.1 Already used for
 
-- The companion IEEE Access paper (array comparison, corpus statistics; under review) and the earlier [AES Copenhagen 2026 paper](https://aes2.org/publications/elibrary-page/?id=23166) on the same comparison session.
-- Training data for a neural Ambisonics-to-binaural renderer ([Zaporowski and Mróz 2026](https://aes2.org/publications/elibrary-page/?id=23351), AES AVARIG 2026): 1,555 paired Ambisonics-binaural files (~9,300 five-second segments), about 62 % of that model's training material, were cut from this corpus.
+- The companion IEEE Access paper (array comparison, corpus statistics; accepted) and the earlier [AES Copenhagen 2026 paper](https://aes.org/publications/elibrary/elibrary-page/?id=23166) on the same comparison session.
+- Training data for a neural Ambisonics-to-binaural renderer ([Zaporowski and Mróz 2026](https://aes.org/publications/elibrary/elibrary-page/?id=23351), AES AVARIG 2026): 1,555 paired Ambisonics-binaural files (~9,300 five-second segments), about 62 % of that model's training material, were cut from this corpus.
 - Produced versions of nine sessions were released on YouTube, HOAST, streaming services or as a livestream (`publication_platforms` in `metadata.yaml`).
 
 ### 5.2 Recommended uses

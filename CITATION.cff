@@ -19,8 +19,8 @@ identifiers:
     value: 10.5281/zenodo.21789163
     description: "Concept DOI; resolves to the latest Zenodo version of this repository"
 license: CC-BY-4.0
-version: 1.1.0
-date-released: 2026-09-06
+version: 1.1.1
+date-released: 2026-10-04
 keywords:
   - ambisonics
   - bootstrap
@@ -49,4 +49,4 @@ preferred-citation:
   publisher:
     name: "IEEE"
   year: 2026
-  status: submitted
+  status: in-press

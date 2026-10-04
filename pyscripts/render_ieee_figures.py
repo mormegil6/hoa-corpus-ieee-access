@@ -120,7 +120,7 @@ def render_fig03():
     ax.axhline(avg, color='red', linestyle='--', linewidth=1.0, alpha=0.8,
                label=f'Broadband avg: {avg:.2f} s')
     _apply_ieee_style(ax,
-                      xlabel='Octave Band Centre Frequency',
+                      xlabel='Octave Band Center Frequency',
                       ylabel='Reverberation Time T30 (s)',
                       legend_loc='upper right', grid_axis='y')
     fig.tight_layout(pad=0.3)
@@ -193,7 +193,7 @@ def render_fig05():
         'choir_with_ensemble':  ('#2ca02c', 's', 'Choir'),
         'orchestra':            ('#d62728', 'D', 'Orch./Ensemble'),
         'ensemble':             ('#d62728', 'D', 'Orch./Ensemble'),
-        'chamber':              ('#9467bd', '^', 'Orch./Ensemble'),
+        'chamber':              ('#9467bd', '^', 'Chamber'),
         'ambient':              ('#e377c2', '*', 'Outdoor/Ambient'),
         'ambience':             ('#e377c2', '*', 'Outdoor/Ambient'),
         'vr_film_production':   ('#17becf', 'v', 'VR/Film'),
@@ -220,6 +220,9 @@ def render_fig05():
             ax.plot(s['date'], y, marker='o', color='none',
                     markersize=9, markeredgewidth=0.8,
                     markeredgecolor='black', zorder=3, linestyle='none')
+
+    ax.plot([], [], marker='o', color='none', markersize=9, markeredgewidth=0.8,
+            markeredgecolor='black', linestyle='none', label='Outdoor venue')
 
     ax.set_ylim(0.60, 1.35)
     ax.set_yticks([])
@@ -528,7 +531,7 @@ def render_fig10():
                 label=comp_labels[comp])
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels(x_tick_labels, fontsize=FS_TICK)
-    ax2.set_ylabel('Normalised to W Channel', fontsize=FS_LABEL)
+    ax2.set_ylabel('Normalized to W Channel', fontsize=FS_LABEL)
     ax2.tick_params(axis='y', labelsize=FS_TICK)
     ax2.grid(True, axis='y', alpha=0.3, linewidth=0.5, linestyle=':')
     ax2.legend(fontsize=FS_LEGEND, framealpha=0.9, edgecolor='0.8',

@@ -152,7 +152,7 @@ def fig10_ci(rows):
                 error_kw=dict(elinewidth=0.7, capthick=0.7))
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels(x_lab, fontsize=FS_TICK)
-    ax2.set_ylabel('Normalised to W Channel', fontsize=FS_LABEL)
+    ax2.set_ylabel('Normalized to W Channel', fontsize=FS_LABEL)
     ax2.tick_params(axis='y', labelsize=FS_TICK)
     ax2.grid(True, axis='y', alpha=0.3, linewidth=0.5, linestyle=':')
     ax2.legend(fontsize=FS_LEGEND, framealpha=0.9, edgecolor='0.8',

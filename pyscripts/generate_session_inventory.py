@@ -175,6 +175,7 @@ def generate_latex_table(sessions):
     lines.append(r"    \centering")
     lines.append(r"    \caption{Complete Session Inventory}\label{tab:session_inventory}")
     lines.append(r"    \small")
+    lines.append(r"    \setlength{\tabcolsep}{4pt}")
     lines.append(r"    \begin{tabular}{@{}rlll l@{\hspace{4pt}}r@{}}")
     lines.append(r"        \toprule")
     lines.append(r"        No. & Date & Venue & Content & Mic & Dur. \\")

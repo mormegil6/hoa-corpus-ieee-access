@@ -5,7 +5,7 @@
 Supplementary materials for the paper:
 
 ***"A Seven-Year Higher-Order Ambisonics Recording Corpus: Dataset, Methodology, and a Co-Located Spherical Microphone Array Comparison"***
-Bartłomiej Mróz, Szymon Zaporowski · *IEEE Access* (under review)
+Bartłomiej Mróz, Szymon Zaporowski · *IEEE Access* (accepted)
 
 This repository contains:
 - The corpus-wide figure and LaTeX-macro pipeline (geographic distribution, recording timeline, room acoustics, loudness distribution, session inventory)
@@ -150,6 +150,8 @@ What it produces, all committed under `revision_results/reencode/` (~6.2 MB):
 | `reencode_variables.tex` | `\Reenc...` macros consumed by the manuscript |
 
 Paths recorded in these files are relative to `revision_results/reencode/` and to the deposit root. The factory ZM-1 and Spcmic 3OA rows of `reencode_bootstrap.csv` carry the intervals of `revision_results/rolloff_bootstrap.csv` (`ci_source` column), so each of those quantities has one committed interval.
+
+The Spcmic is not re-encoded in this release; Section V-B of the manuscript leaves it to future work because it needs a numerical model of disc scattering. Harpex distributes a frequency-domain array response with its software, `spcmic-response.mat` in [harpex.net/spcmicsoftware](https://harpex.net/spcmicsoftware/): the complex responses of the 84 sensors to plane waves from 648 directions (a 10-degree grid) at 99 wavenumbers up to 19.6 kHz (at 343 m/s), which could take the place of that model. The sensor responses repeat bit for bit under a 120-degree rotation about the disc axis, so the layout the file models is three-fold symmetric and is not the six rings of seven capsules per side [published in 2019](https://hal.science/hal-02275191). The file does not say whether the data are measured or computed, it has not been validated here, and as Harpex's file it is not redistributed in this repository.
 
 ## Rebuilding a `.spcmic` file from a raw 84-channel capture
 
