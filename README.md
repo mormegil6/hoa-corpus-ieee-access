@@ -5,7 +5,7 @@
 Supplementary materials for the paper:
 
 ***"A Seven-Year Higher-Order Ambisonics Recording Corpus: Dataset, Methodology, and a Co-Located Spherical Microphone Array Comparison"***
-Bartłomiej Mróz, Szymon Zaporowski · *IEEE Access* (accepted)
+Bartłomiej Mróz, Szymon Zaporowski · *IEEE Access*, vol. 14, 2026 (Early Access) · [doi:10.1109/ACCESS.2026.3741586](https://doi.org/10.1109/ACCESS.2026.3741586)
 
 This repository contains:
 - The corpus-wide figure and LaTeX-macro pipeline (geographic distribution, recording timeline, room acoustics, loudness distribution, session inventory)
